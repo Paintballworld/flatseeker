@@ -9,6 +9,7 @@ import lombok.Data;
 public class LinkData {
 
     private URL url;
+    private String link;
     private String title;
 
 }

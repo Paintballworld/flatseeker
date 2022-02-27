@@ -15,7 +15,7 @@ public class UpdateNewRecordsScheduler {
     private final RecordProvider recordProvider;
     private final NewApartmentRecordStrategy newApartmentRecordStrategy;
 
-    @Scheduled(fixedDelay = 60_000L)
+    @Scheduled(fixedDelay = 60_000L, initialDelay = 2_000L)
     public void loadOneNewPageAndSave() {
         recordProvider.nextRecord()
           .ifPresentOrElse(newApartmentRecordStrategy::process, () -> log.info("No record loaded - skipping..."));

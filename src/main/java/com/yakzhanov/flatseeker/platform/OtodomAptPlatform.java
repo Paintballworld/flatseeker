@@ -154,7 +154,7 @@ public class OtodomAptPlatform implements AptPlatform {
           .map(e -> e.attr("title"))
           .orElse("");
 
-        return (link + title).isEmpty() ? null : new LinkData(AppUtils.convertToUrlOrNull(link), title);
+        return (link + title).isEmpty() ? null : new LinkData(AppUtils.convertToUrlOrNull(link), link, title);
     }
 
     @Override

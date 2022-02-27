@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Queue;
 import java.util.UUID;
@@ -70,7 +71,7 @@ public class RoundRobinRecordProviderImpl implements RecordProvider {
 
     @SneakyThrows
     private Queue<URL> loadNextSearchPageUrls(AptPlatform platform) {
-        log.info("Updating page list for {}", platform.name());
+        log.info("Updating page list for '{}'", platform.name());
         platform.updateRequestTime();
         var linkDataList = Optional.of(getPlatformNextSearchPage(platform))
           .map(nextPageNumber -> platform.resolveSearchPageUrl(nextPageNumber, appParams))
@@ -78,19 +79,26 @@ public class RoundRobinRecordProviderImpl implements RecordProvider {
           .map(platform::extractSearchPageLinks)
           .orElse(Collections.emptyList());
 
-        apartmentRecordRepository.loadTitleOnly(Pageable.ofSize(100), platform.name())
-          .stream()
+        apartmentRecordRepository.loadTitleOnly(platform.name())
           .forEach(existingTitle -> linkDataList.removeIf(linkData -> linkData.getTitle().equals(existingTitle)));
 
         if (linkDataList.isEmpty()) {
-            log.info("Platform {} is exhausted and therefore will be ignored for {} ms", platform.name(), Constants.NEW_ADS_AWAIT_TIMEOUT);
+            log.info("Platform '{}' is exhausted and therefore will be ignored for {} ms", platform.name(), Constants.NEW_ADS_AWAIT_TIMEOUT);
             nextPageForPlatformMap.put(platform, new AtomicInteger(platform.searchPageInitialValue()));
             platform.markAsExhausted();
         }
 
         return linkDataList.stream()
+          .peek(linkData -> warnIfNull(linkData, platform))
           .map(LinkData::getUrl)
+          .filter(Objects::nonNull)
           .collect(Collectors.toCollection(ConcurrentLinkedDeque::new));
+    }
+
+    private void warnIfNull(LinkData linkData, AptPlatform platform) {
+        if (linkData.getUrl() == null) {
+            log.warn("Link Data extracted from '{}' has unresolved url. {}", platform.name(), linkData);
+        }
     }
 
     @SuppressWarnings("ConstantConditions")

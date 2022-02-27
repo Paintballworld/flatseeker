@@ -123,9 +123,9 @@ public class GumtreeAptPlatform implements AptPlatform {
     }
 
     private LinkData extractSearchPageLink(Element element) {
-        String link = element.attr("href");
+        String link = baseUrl() + element.attr("href");
         String title = element.text();
-        return (link + title).isEmpty() ? null : new LinkData(AppUtils.convertToUrlOrNull(link), title);
+        return (link + title).isEmpty() ? null : new LinkData(AppUtils.convertToUrlOrNull(link), link, title);
     }
 
     @Override

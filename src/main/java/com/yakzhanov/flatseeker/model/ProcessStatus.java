@@ -14,6 +14,7 @@ public enum ProcessStatus {
     REJECTED_OWNER("Отклонено (мы)"),
     REJECTED_ME("Отклонено (владельцы)"),
     OUTDATED("Просрочено"),
+    DUPLICATE("Дубликат"),
     UNKNOWN("Не известно")
     ;
 
