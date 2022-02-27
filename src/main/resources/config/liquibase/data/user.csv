@@ -1,0 +1,2 @@
+id,password,login,first_name,last_name,email,image_url,activated,lang_key,created_by,last_modified_by
+1,$2a$12$hw5wo/6QFCwmaEy80P5.d.o/UuWMyO09x/7cgPvewvMdudwAdSM7G,yakzhanov,Yerlan,Akzhanov,yakzhanov@gmail.com,http://dummyimage.com/162x100.png/ff4444/ffffff,true,RU,,

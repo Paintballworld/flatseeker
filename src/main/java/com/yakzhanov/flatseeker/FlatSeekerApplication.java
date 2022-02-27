@@ -2,12 +2,14 @@ package com.yakzhanov.flatseeker;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
-public class FlatseekerApplication {
+@EnableScheduling
+public class FlatSeekerApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(FlatseekerApplication.class, args);
+        SpringApplication.run(FlatSeekerApplication.class, args);
     }
 
 }

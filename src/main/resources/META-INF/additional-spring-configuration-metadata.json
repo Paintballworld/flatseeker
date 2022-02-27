@@ -1,0 +1,20 @@
+{
+  "properties": [
+    {
+      "name": "price-cap",
+      "type": "java.lang.String",
+      "description": "Description for price-cap."
+    }, {
+      "name": "config",
+      "type": "java.lang.String",
+      "description": "Description for config."
+    }, {
+      "name": "app",
+      "type": "java.lang.String",
+      "description": "Description for app."
+    }, {
+      "name": "app.params.new-record-strategy-pool-size",
+      "type": "java.lang.String",
+      "description": "Description for app.params.new-record-strategy-pool-size."
+    }
+  ] }

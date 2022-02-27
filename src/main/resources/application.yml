@@ -1,0 +1,34 @@
+app:
+  params:
+    price-cap: 5000
+    room-count: 4
+    new-record-strategy-pool-size: 5
+  jwtSecret: flatseeker-app
+  jwtExpirationMs: 86400000
+
+spring:
+  security:
+    user:
+      name: yakzhanov
+      password: password
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:postgresql://localhost:5432/flatseeker
+    username: flatseeker
+    password: flatseeker_password_123
+    hikari:
+      poolName: Hikari
+      auto-commit: false
+  liquibase:
+    user: flatseeker
+    password: flatseeker_password_123
+    change-log: classpath:config/liquibase/master.xml
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+
+server:
+    port: 9090
