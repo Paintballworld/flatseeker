@@ -1,10 +1,22 @@
 .cut-text {
-  width: 500px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+
 }
 
 .rent-price {
   margin-left: 24px;
+}
+
+.list-item-record {
+  margin: 5px 24px;
+  padding: 24px;
+  background-color: white;
+  border-radius: 6px;
+}
+
+.platform-badge {
+  background-color: forestgreen;
+  color: white;
+  font-weight: bolder;
+  padding: 2px 15px;
+  border-radius: 12px;
 }

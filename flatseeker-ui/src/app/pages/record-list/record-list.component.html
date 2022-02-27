@@ -3,18 +3,17 @@
   Refresh
 </button>
 <nz-list nzItemLayout="vertical">
-  <nz-list-item *ngFor="let item of records">
+  <nz-list-item *ngFor="let item of records" class="list-item-record">
     <nz-list-item-meta>
       <nz-list-item-meta-title>
         <a href="{{ item.link }}">{{ item.title }}</a>
-        <span class="rent-price">{{ item.rentPrice + item.feePrice }}</span>
-        <span class="fee-status">{{ item.feePrice <= 0 ? "*" : ""}}</span>
+        <span class="rent-price">{{ item.rentPrice }} + {{ item.feePrice ? item.feePrice : "--" }}</span>
       </nz-list-item-meta-title>
     </nz-list-item-meta>
-    <div class="cut-text">{{ item.description }}</div>
+    <div class="cut-text">{{ (item.description.length>500)? (item.description | slice:0:500)+'..':(item.description)}}</div>
     <ul nz-list-item-actions>
       <nz-list-item-action>
-        {{ item.platformName }}
+        <span class="platform-badge">{{ item.platformName }}</span>
       </nz-list-item-action>
       <nz-list-item-action>
         {{ item.status }}
@@ -24,7 +23,7 @@
       </nz-list-item-action>
     </ul>
     <nz-list-item-extra>
-      <img width="272" alt="logo" [src]="item.mainImageUrl" />
+      <img width="272" alt="logo" [src]="item.mainImageUrl"/>
     </nz-list-item-extra>
   </nz-list-item>
 </nz-list>

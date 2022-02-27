@@ -48,7 +48,8 @@ registerLocaleData(en);
     NzButtonModule,
     NzInputModule,
     NzMenuModule,
-    NzListModule
+    NzListModule,
+    NzBadgeModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
