@@ -1,0 +1,10 @@
+.cut-text {
+  width: 500px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rent-price {
+  margin-left: 24px;
+}

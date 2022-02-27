@@ -10,8 +10,8 @@ export class RecordService {
   constructor(private http: HttpClient) {
   }
 
-  getRecords(page: number): Observable<RecordRow[]> {
-    return this.http.get<RecordRow[]>(`${environment.apiUrl}/record/${page}`);
+  getRecords(): Observable<RecordRow[]> {
+    return this.http.get<RecordRow[]>(`${environment.apiUrl}/records/`);
   }
 
 }
