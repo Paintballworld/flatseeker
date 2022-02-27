@@ -12,7 +12,7 @@ public class SignupRequest {
 
     @NotNull
     @Pattern(regexp = Constants.LOGIN_REGEX)
-    @Size(min = 1, max = 50)
+    @Size(min = 5, max = 50)
     private String username;
 
     @NotNull

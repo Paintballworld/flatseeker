@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -40,7 +40,7 @@ public class AuthController {
     private final JwtUtils jwtUtils;
     private final AuthorityRepository authorityRepository;
 
-    @PostMapping("/signin")
+    @PostMapping("/login")
     public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
         Authentication authentication = authenticationManager.authenticate(
@@ -61,7 +61,7 @@ public class AuthController {
           roles));
     }
 
-    @PostMapping("/signup")
+    @PostMapping("/create_account")
     public ResponseEntity<MessageResponse> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
         if (userRepository.existsByLogin(signUpRequest.getUsername())) {
             return ResponseEntity
@@ -79,6 +79,8 @@ public class AuthController {
         User user = new User(signUpRequest.getUsername(),
           signUpRequest.getEmail(),
           encoder.encode(signUpRequest.getPassword()));
+
+        user.setCreatedBy("SELF");
 
         var authority = authorityRepository.loadDefaultUserAuthority();
         user.setAuthorities(Collections.singleton(authority));

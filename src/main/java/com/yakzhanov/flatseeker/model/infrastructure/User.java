@@ -50,12 +50,12 @@ public class User {
 
     @Email
     @Size(min = 5, max = 254)
-    @Column(length = 254, unique = true)
+    @Column(unique = true)
     private String email;
 
     @JsonIgnore
     @Size(max = 255)
-    @Column(name = "password", length = 50)
+    @Column(length = 50)
     private String password;
 
     @NotNull
@@ -63,12 +63,15 @@ public class User {
     private boolean activated = false;
 
     @Size(min = 2, max = 10)
-    @Column(name = "lang_key", length = 10)
+    @Column(length = 10)
     private String langKey;
 
     @Size(max = 256)
-    @Column(name = "image_url", length = 256)
+    @Column(length = 256)
     private String imageUrl;
+
+    @Column(nullable = false)
+    private String createdBy;
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
