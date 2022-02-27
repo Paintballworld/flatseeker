@@ -1,12 +1,5 @@
-pluginManagement {
-  repositories {
-    maven { url 'https://repo.spring.io/milestone' }
-    gradlePluginPortal()
-  }
-  plugins {
-    id 'org.liquibase.gradle' version "${liquibasePluginVersion}"
-  }
-}
-
 rootProject.name = 'flatseeker'
+include 'flatseeker-ui'
+include 'flatseeker-backend'
+include 'flatseeker-server'
 
