@@ -27,6 +27,7 @@ import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 
 registerLocaleData(en);
 
@@ -59,7 +60,8 @@ registerLocaleData(en);
     NzDrawerModule,
     NzFormModule,
     NzMessageModule,
-    NzSelectModule
+    NzSelectModule,
+    NzInputNumberModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},

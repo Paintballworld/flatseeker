@@ -4,9 +4,11 @@ import { RecordRow } from "../../model/RecordRow";
 import { ApartmentRecord } from "../../model/ApartmentRecord";
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { AnimalsStatus } from "../../model/AnimalsStatus";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormGroup } from "@angular/forms";
 import { BathroomStatus } from "../../model/BathroomStatus";
+import { LocationStatus } from "../../model/LocationStatus";
 import { ApartmentType } from "../../model/ApartmentType";
+import { ProcessStatus } from '../../model/ProcessStatus';
 
 @Component({
   selector: 'app-record-list',
@@ -24,6 +26,11 @@ export class RecordListComponent implements OnInit {
   AnimalsStatus = AnimalsStatus;
   BathroomStatus = BathroomStatus;
   ApartmentType = ApartmentType;
+  LocationStatus = LocationStatus;
+  ProcessStatus = ProcessStatus;
+
+  formatterZloty = (value: number): string => `${value} zł`;
+  parserZloty = (value: string): string => value.replace(' zł', '');
 
   validateForm!: FormGroup;
 
@@ -63,7 +70,6 @@ export class RecordListComponent implements OnInit {
     this.recordService.getRecord(id)
       .subscribe({
         next: data => {
-          console.log("Record loaded:", data);
           this.selectedRecord = data;
           this.drawerOpen = true;
         },
@@ -89,6 +95,22 @@ export class RecordListComponent implements OnInit {
           this.drawerOpen = false;
         }
       })
+  }
+
+  updateProcessStatus(record: RecordRow, newStatus: string): void {
+    console.log("Updating status", record.id, newStatus);
+    this.recordService.updateProcessStatus(record.id, newStatus)
+      .subscribe({
+        next: ignore => this.refresh()
+      })
+  }
+
+  stringify(enumValue: ProcessStatus) : string {
+    return JSON.stringify(enumValue);
+  }
+
+  areEqual(enumValue: ProcessStatus, enumIterable: any): boolean {
+    return JSON.stringify(enumValue) === JSON.stringify(enumIterable);
   }
 
 }

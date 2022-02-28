@@ -4,6 +4,7 @@ import { environment } from "../../environments/environment";
 import { RecordRow } from "../model/RecordRow";
 import { Observable } from "rxjs";
 import { ApartmentRecord } from "../model/ApartmentRecord";
+import { ProcessStatus } from "../model/ProcessStatus";
 
 @Injectable({providedIn: 'root'})
 export class RecordService {
@@ -25,6 +26,11 @@ export class RecordService {
 
   updateRecord(record: ApartmentRecord): Observable<any> {
     return this.http.put(`${environment.apiUrl}/records/`, record);
+  }
+
+  updateProcessStatus(id: string, newStatus: string): Observable<ApartmentRecord> {
+    let updateStatusRequest = {"id": id, "newStatus": newStatus};
+    return this.http.put<ApartmentRecord>(`${environment.apiUrl}/records/update-status`, updateStatusRequest);
   }
 
 }

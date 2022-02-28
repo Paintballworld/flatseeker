@@ -1,16 +1,17 @@
 export enum ProcessStatus {
 
-  NEW = "NEW",
-  WEBFORM_SENT = "WEBFORM_SENT",
-  REQUEST_SENT = "REQUEST_SENT",
-  RESPONSE_RECEIVED = "RESPONSE_RECEIVED",
-  MEETING_SCHEDULED = "MEETING_SCHEDULED",
-  WAITING_CONFIRMATION = "WAITING_CONFIRMATION",
-  WAITING_DECISION = "WAITING_DECISION",
-  REJECTED_OWNER = "REJECTED_OWNER",
-  REJECTED_ME = "REJECTED_ME",
-  OUTDATED = "OUTDATED",
-  DUPLICATE = "DUPLICATE",
-  UNKNOWN = "UNKNOWN"
-
+  NEW = "Новый",
+  WEBFORM_SENT = "Форма отправлена",
+  REQUEST_SENT = "Запрос отправлен",
+  RESPONSE_RECEIVED = "Отклик получен",
+  MEETING_SCHEDULED = "Встреча назначена",
+  WAITING_CONFIRMATION = "Ожидает решения (мы)",
+  WAITING_DECISION = "Ожидает решения (владельцы)",
+  REJECTED_OWNER = "Отклонено (мы)",
+  REJECTED_ME = "Отклонено (владельцы)",
+  OUTDATED = "Просрочено",
+  DUPLICATE = "Дубликат",
+  UNKNOWN = "Не известно"
 }
+
+

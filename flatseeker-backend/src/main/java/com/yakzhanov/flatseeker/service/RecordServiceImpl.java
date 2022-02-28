@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import com.yakzhanov.flatseeker.model.ApartmentRecord;
+import com.yakzhanov.flatseeker.model.ProcessStatus;
 import com.yakzhanov.flatseeker.platform.AptPlatform;
 import com.yakzhanov.flatseeker.repository.ApartmentRecordRepository;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +39,11 @@ public class RecordServiceImpl implements RecordService {
     @Override
     public void update(ApartmentRecord record) {
         repository.save(record);
+    }
+
+    @Override
+    public void updateStatus(String id, ProcessStatus newStatus) {
+        repository.updateProcessStatus(id, newStatus);
     }
 
 }

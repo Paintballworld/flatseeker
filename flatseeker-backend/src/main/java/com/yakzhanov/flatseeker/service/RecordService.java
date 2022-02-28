@@ -3,6 +3,7 @@ package com.yakzhanov.flatseeker.service;
 import java.util.List;
 import java.util.Optional;
 import com.yakzhanov.flatseeker.model.ApartmentRecord;
+import com.yakzhanov.flatseeker.model.ProcessStatus;
 
 public interface RecordService {
 
@@ -14,4 +15,5 @@ public interface RecordService {
 
     void update(ApartmentRecord record);
 
+    void updateStatus(String id, ProcessStatus newStatus);
 }

@@ -1,4 +1,4 @@
-import { ProcessStatus } from "./processStatus";
+import { ProcessStatus } from "./ProcessStatus";
 
 export class RecordRow {
   public id: string;
@@ -10,11 +10,11 @@ export class RecordRow {
   public mainImageUrl: string;
   public area: number;
   public processStatus: ProcessStatus;
-  public date: Date;
+  public createdAt: Date;
   public link: string;
   public totalPrice: number;
 
-  constructor(id: string, title: string, rentPrice: number, feePrice: number, platformName: string, description: string, mainImageUrl: string, area: number, status: ProcessStatus, date: Date, link: string, totalPrice: number) {
+  constructor(id: string, title: string, rentPrice: number, feePrice: number, platformName: string, description: string, mainImageUrl: string, area: number, status: ProcessStatus, createdAt: Date, link: string, totalPrice: number) {
     this.id = id;
     this.title = title;
     this.rentPrice = rentPrice;
@@ -24,7 +24,7 @@ export class RecordRow {
     this.mainImageUrl = mainImageUrl;
     this.area = area;
     this.processStatus = status;
-    this.date = date;
+    this.createdAt = createdAt;
     this.link = link;
     this.totalPrice = totalPrice;
   }

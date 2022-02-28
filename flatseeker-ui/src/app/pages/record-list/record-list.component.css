@@ -2,8 +2,16 @@
 
 }
 
+.total-price {
+  font-weight: bolder;
+  font-size: larger;
+  color: midnightblue;
+  margin: 0 12px;
+}
+
 .rent-price {
-  margin-left: 24px;
+  font-weight: lighter;
+  color: gray;
 }
 
 .list-item-record {
@@ -39,6 +47,7 @@
   background-color: #22278b;
   color: white;
   font-weight: bolder;
+  margin: 0 2px;
   padding: 2px 15px;
   border-radius: 12px;
   cursor: pointer;
@@ -71,3 +80,91 @@
 .form-item {
   margin-bottom: 12px;
 }
+
+.form-item-label {
+  font-weight: 300;
+  color: #646464;
+}
+
+.record-status-list {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  /*justify-content: start;*/
+  /*justify-items: center;*/
+  padding: 0;
+}
+
+.record-status-list-item {
+  width: fit-content;
+  list-style: none;
+  opacity: .3;
+  transition: opacity 300ms;
+}
+
+.record-status-list-selected {
+  opacity: 1;
+  margin: 0 12px;
+}
+
+.truncated-status {
+  width: 60px;
+  white-space: nowrap;
+  overflow: hidden;
+  border-radius: 12px;
+  text-overflow: ellipsis;
+}
+
+.record-status-list-item:hover {
+  opacity: 1;
+  transition: opacity 300ms;
+}
+
+.NEW {
+  background-color: green;
+}
+
+.WEBFORM_SENT{
+  background-color: #228b22;
+}
+
+.REQUEST_SENT{
+  background-color: cadetblue;
+}
+
+.RESPONSE_RECEIVED{
+  background-color: orangered;
+}
+
+.MEETING_SCHEDULED{
+  background-color: cornflowerblue;
+}
+
+.WAITING_CONFIRMATION{
+  background-color: orange;
+}
+
+.WAITING_DECISION{
+  background-color: darkred;
+}
+
+.REJECTED_OWNER{
+  background-color: gray;
+}
+
+.REJECTED_ME{
+  background-color: gray;
+}
+
+.OUTDATED{
+  background-color: gray;
+}
+
+.DUPLICATE{
+  background-color: gray;
+}
+
+.UNKNOWN{
+  background-color: red;
+}
+

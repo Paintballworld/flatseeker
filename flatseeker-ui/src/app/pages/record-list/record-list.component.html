@@ -2,33 +2,50 @@
   <i nz-icon nzType="poweroff"></i>
   Refresh
 </button>
-<nz-list nzItemLayout="vertical">
+<nz-list nzItemLayout="vertical" [nzLoading]="loading">
   <nz-list-item *ngFor="let item of records" class="list-item-record">
     <nz-list-item-meta (click)="editRecord(item.id)">
       <nz-list-item-meta-title (click)="editRecord(item.id)">
         {{ item.title }}
-        <span class="rent-price">{{ item.rentPrice }} + {{ item.feePrice ? item.feePrice : "--" }}</span>
+        <span class="total-price">{{ item.feePrice ? (item.feePrice + item.rentPrice) : item.rentPrice + "*"}}</span>
+        <span class="rent-price">({{ item.rentPrice }} + {{ item.feePrice ? item.feePrice : ".." }})</span>
       </nz-list-item-meta-title>
       <nz-list-item-meta-description (click)="editRecord(item.id)">
         {{ item.platformName }}
       </nz-list-item-meta-description>
     </nz-list-item-meta>
     <div (click)="editRecord(item.id)"
-      class="cut-text">{{ (item.description.length > 500) ? (item.description | slice:0:500) + '..' : (item.description)}}</div>
+         class="cut-text">{{ (item.description.length > 500) ? (item.description | slice:0:500) + '..' : (item.description)}}</div>
+    <ul class="record-status-list">
+      <li
+        *ngFor="let enum of ProcessStatus | keyvalue"
+        class="record-status-list-item"
+        [class.record-status-list-selected]="areEqual(item.processStatus, enum.key)"
+        [class.truncated-status]="!areEqual(item.processStatus, enum.key)"
+        nz-tooltip nzTooltipTitle="{{ enum.value }}">
+            <span class="record-status" (click)="updateProcessStatus(item, enum.key)"
+            [ngClass]="enum.key">
+            {{ enum.value }}
+            </span>
+      </li>
+    </ul>
     <ul nz-list-item-actions>
-      <nz-list-item-action>
-        <span class="record-status">{{ item.processStatus }}</span>
+      <nz-list-item-action class="record-item-date">
+        {{ item.createdAt | date:'longDate'}}
       </nz-list-item-action>
-      <nz-list-item-action>
-        {{ item.date}}
-      </nz-list-item-action>
+      <!--      <nz-list-item-action>-->
+      <!--        -->
+      <!--      </nz-list-item-action>-->
     </ul>
     <nz-list-item-extra>
       <a href="{{ item.link }}" target="_blank">
-        <img class="record-image" alt="logo" [src]="item.mainImageUrl"/>
+        <nz-badge [nzDot]="false">
+          <img class="record-image" alt="logo" [src]="item.mainImageUrl"/>
+        </nz-badge>
       </a>
     </nz-list-item-extra>
   </nz-list-item>
+  <nz-list-empty *ngIf="records.length === 0"></nz-list-empty>
 </nz-list>
 <nz-drawer
   [nzClosable]="false"
@@ -46,7 +63,7 @@
         <a [href]="selectedRecord.link" target="_blank">{{ selectedRecord?.title }}</a>
       </h2>
       <nz-form-item class="form-item">
-        <nz-form-label>Домашние животные</nz-form-label>
+        <nz-form-label class="form-item-label">Домашние животные</nz-form-label>
         <nz-form-control nzHasFeedback>
           <nz-select name="animalsStatus" [(ngModel)]="selectedRecord.animalsStatus" (ngModelChange)="log($event)">
             <nz-option *ngFor="let enum of AnimalsStatus | keyvalue"
@@ -58,7 +75,7 @@
       </nz-form-item>
 
       <nz-form-item class="form-item">
-        <nz-form-label>Ванная комната</nz-form-label>
+        <nz-form-label class="form-item-label">Ванная комната</nz-form-label>
         <nz-form-control nzHasFeedback>
           <nz-select name="bathroomStatus" [(ngModel)]="selectedRecord.bathroomStatus">
             <nz-option *ngFor="let enum of BathroomStatus | keyvalue" [nzValue]="enum.key"
@@ -68,7 +85,7 @@
       </nz-form-item>
 
       <nz-form-item class="form-item">
-        <nz-form-label>Тип жилья</nz-form-label>
+        <nz-form-label class="form-item-label">Тип жилья</nz-form-label>
         <nz-form-control nzHasFeedback>
           <nz-select name="type" [(ngModel)]="selectedRecord.type">
             <nz-option *ngFor="let enum of ApartmentType | keyvalue" [nzValue]="enum.key"
@@ -76,6 +93,43 @@
           </nz-select>
         </nz-form-control>
       </nz-form-item>
+
+      <nz-form-item class="form-item">
+        <nz-form-label class="form-item-label">Расстояние до школы</nz-form-label>
+        <nz-form-control nzHasFeedback>
+          <nz-select name="locationStatus" [(ngModel)]="selectedRecord.locationStatus">
+            <nz-option *ngFor="let enum of LocationStatus | keyvalue" [nzValue]="enum.key"
+                       [nzLabel]="enum.value"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+
+      <nz-form-item class="form-item">
+        <nz-form-label class="form-item-label">Ком. услуги</nz-form-label>
+        <nz-form-control nzHasFeedback>
+          <nz-input-number name="feePrice"
+                           [(ngModel)]="selectedRecord.feePrice"
+                           [nzMin]="0"
+                           [nzStep]="100"
+                           [nzFormatter]="formatterZloty"
+                           [nzParser]="parserZloty"
+          ></nz-input-number>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item class="form-item">
+        <nz-form-label class="form-item-label">
+          Ссылка на координаты:
+          <a *ngIf="selectedRecord.location != null" [href]="selectedRecord.location" target="_blank">ссылка</a>
+        </nz-form-label>
+        <nz-form-control nzHasFeedback>
+          <nz-input-group nzPrefixIcon="user">
+              <input nz-input formControlName="location" [(ngModel)]="selectedRecord.location"  placeholder="Ссылка на Гугл координаты"/>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
 
       <nz-form-item class="form-item">
         <nz-form-control [nzSpan]="6" [nzOffset]="20">

@@ -1,4 +1,4 @@
-import { ProcessStatus } from "./processStatus";
+import { ProcessStatus } from "./ProcessStatus";
 import { LocationStatus } from "./LocationStatus";
 import { BathroomStatus } from "./BathroomStatus";
 import { AnimalsStatus } from "./AnimalsStatus";

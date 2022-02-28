@@ -3,10 +3,12 @@ package com.yakzhanov.flatseeker.controller;
 import java.util.List;
 import javax.validation.Valid;
 import com.yakzhanov.flatseeker.model.ApartmentRecord;
+import com.yakzhanov.flatseeker.model.dto.UpdateStatusRequest;
 import com.yakzhanov.flatseeker.service.RecordProvider;
 import com.yakzhanov.flatseeker.service.RecordService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -35,6 +37,11 @@ public class ManualTestRecordsController {
     @PutMapping("/")
     public void updateRecord(@RequestBody @Valid ApartmentRecord record) {
         recordService.update(record);
+    }
+
+    @PutMapping("/update-status")
+    public void updateStatus(@RequestBody @Valid UpdateStatusRequest request) {
+        recordService.updateStatus(request.getId(), request.getNewStatus());
     }
 
     @GetMapping("/platform/{platformName}")
