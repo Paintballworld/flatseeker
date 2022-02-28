@@ -6,6 +6,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { AnimalsStatus } from "../../model/AnimalsStatus";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { BathroomStatus } from "../../model/BathroomStatus";
+import { ApartmentType } from "../../model/ApartmentType";
 
 @Component({
   selector: 'app-record-list',
@@ -22,6 +23,7 @@ export class RecordListComponent implements OnInit {
   drawerOpen: boolean = false;
   AnimalsStatus = AnimalsStatus;
   BathroomStatus = BathroomStatus;
+  ApartmentType = ApartmentType;
 
   validateForm!: FormGroup;
 

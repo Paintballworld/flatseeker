@@ -5,15 +5,15 @@
 <nz-list nzItemLayout="vertical">
   <nz-list-item *ngFor="let item of records" class="list-item-record">
     <nz-list-item-meta (click)="editRecord(item.id)">
-      <nz-list-item-meta-title>
-        <a href="{{ item.link }}" target="_blank">{{ item.title }} </a>
+      <nz-list-item-meta-title (click)="editRecord(item.id)">
+        {{ item.title }}
         <span class="rent-price">{{ item.rentPrice }} + {{ item.feePrice ? item.feePrice : "--" }}</span>
       </nz-list-item-meta-title>
-      <nz-list-item-meta-description>
+      <nz-list-item-meta-description (click)="editRecord(item.id)">
         {{ item.platformName }}
       </nz-list-item-meta-description>
     </nz-list-item-meta>
-    <div
+    <div (click)="editRecord(item.id)"
       class="cut-text">{{ (item.description.length > 500) ? (item.description | slice:0:500) + '..' : (item.description)}}</div>
     <ul nz-list-item-actions>
       <nz-list-item-action>
@@ -42,12 +42,12 @@
   <form *nzDrawerContent nz-form [nzLayout]="'vertical'" (ngSubmit)="submitForm()">
     <nz-form-item class="edit-record-drawer">
 
-      <div class="drawer-source-link">
+      <h2 class="drawer-source-link">
         <a [href]="selectedRecord.link" target="_blank">{{ selectedRecord?.title }}</a>
-      </div>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="5">Домашние животные</nz-form-label>
-        <nz-form-control [nzSpan]="12" nzHasFeedback>
+      </h2>
+      <nz-form-item class="form-item">
+        <nz-form-label>Домашние животные</nz-form-label>
+        <nz-form-control nzHasFeedback>
           <nz-select name="animalsStatus" [(ngModel)]="selectedRecord.animalsStatus" (ngModelChange)="log($event)">
             <nz-option *ngFor="let enum of AnimalsStatus | keyvalue"
                        [nzValue]="enum.key"
@@ -57,9 +57,9 @@
         </nz-form-control>
       </nz-form-item>
 
-      <nz-form-item>
-        <nz-form-label [nzSpan]="5">Ванная(ые) комнаты</nz-form-label>
-        <nz-form-control [nzSpan]="12" nzHasFeedback>
+      <nz-form-item class="form-item">
+        <nz-form-label>Ванная комната</nz-form-label>
+        <nz-form-control nzHasFeedback>
           <nz-select name="bathroomStatus" [(ngModel)]="selectedRecord.bathroomStatus">
             <nz-option *ngFor="let enum of BathroomStatus | keyvalue" [nzValue]="enum.key"
                        [nzLabel]="enum.value"></nz-option>
@@ -67,8 +67,18 @@
         </nz-form-control>
       </nz-form-item>
 
-      <nz-form-item>
-        <nz-form-control [nzSpan]="12" [nzOffset]="5">
+      <nz-form-item class="form-item">
+        <nz-form-label>Тип жилья</nz-form-label>
+        <nz-form-control nzHasFeedback>
+          <nz-select name="type" [(ngModel)]="selectedRecord.type">
+            <nz-option *ngFor="let enum of ApartmentType | keyvalue" [nzValue]="enum.key"
+                       [nzLabel]="enum.value"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item class="form-item">
+        <nz-form-control [nzSpan]="6" [nzOffset]="20">
           <button nz-button nzType="primary">Сохранить</button>
         </nz-form-control>
       </nz-form-item>

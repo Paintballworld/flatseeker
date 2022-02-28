@@ -1,7 +1,7 @@
 export enum ApartmentType {
 
-  FLAT = "FLAT",
-  HOUSE = "HOUSE",
-  PART_OF_HOUSE = "PART_OF_HOUSE",
+  FLAT = "Квартира",
+  HOUSE = "Дом",
+  PART_OF_HOUSE = "Часть дома",
 
 }
