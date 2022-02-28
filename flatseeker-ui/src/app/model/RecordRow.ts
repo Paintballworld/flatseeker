@@ -9,7 +9,7 @@ export class RecordRow {
   public description: string;
   public mainImageUrl: string;
   public area: number;
-  public status: ProcessStatus;
+  public processStatus: ProcessStatus;
   public date: Date;
   public link: string;
   public totalPrice: number;
@@ -23,7 +23,7 @@ export class RecordRow {
     this.description = description;
     this.mainImageUrl = mainImageUrl;
     this.area = area;
-    this.status = status;
+    this.processStatus = status;
     this.date = date;
     this.link = link;
     this.totalPrice = totalPrice;

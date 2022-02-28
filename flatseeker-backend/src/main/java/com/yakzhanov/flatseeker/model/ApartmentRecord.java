@@ -44,11 +44,14 @@ public class ApartmentRecord {
 
     private String mainImageUrl;
 
+
     // Service
     private LocationStatus locationStatus;
     private String link;
     private String platformName;
     private ProcessStatus processStatus;
+    private String comment;
+    private Date insertedAt;
 
 
 }

@@ -8,5 +8,10 @@ public interface RecordService {
 
     Optional<List<ApartmentRecord>> loadAll();
 
+    Optional<ApartmentRecord> loadById(String recordId);
+
     Optional<List<ApartmentRecord>> loadByPlatformName(String platformName);
+
+    void update(ApartmentRecord record);
+
 }

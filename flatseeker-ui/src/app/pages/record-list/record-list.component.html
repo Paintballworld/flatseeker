@@ -4,26 +4,75 @@
 </button>
 <nz-list nzItemLayout="vertical">
   <nz-list-item *ngFor="let item of records" class="list-item-record">
-    <nz-list-item-meta>
+    <nz-list-item-meta (click)="editRecord(item.id)">
       <nz-list-item-meta-title>
-        <a href="{{ item.link }}">{{ item.title }}</a>
+        <a href="{{ item.link }}" target="_blank">{{ item.title }} </a>
         <span class="rent-price">{{ item.rentPrice }} + {{ item.feePrice ? item.feePrice : "--" }}</span>
       </nz-list-item-meta-title>
+      <nz-list-item-meta-description>
+        {{ item.platformName }}
+      </nz-list-item-meta-description>
     </nz-list-item-meta>
-    <div class="cut-text">{{ (item.description.length>500)? (item.description | slice:0:500)+'..':(item.description)}}</div>
+    <div
+      class="cut-text">{{ (item.description.length > 500) ? (item.description | slice:0:500) + '..' : (item.description)}}</div>
     <ul nz-list-item-actions>
       <nz-list-item-action>
-        <span class="platform-badge">{{ item.platformName }}</span>
-      </nz-list-item-action>
-      <nz-list-item-action>
-        {{ item.status }}
+        <span class="record-status">{{ item.processStatus }}</span>
       </nz-list-item-action>
       <nz-list-item-action>
         {{ item.date}}
       </nz-list-item-action>
     </ul>
     <nz-list-item-extra>
-      <img width="272" alt="logo" [src]="item.mainImageUrl"/>
+      <a href="{{ item.link }}" target="_blank">
+        <img class="record-image" alt="logo" [src]="item.mainImageUrl"/>
+      </a>
     </nz-list-item-extra>
   </nz-list-item>
 </nz-list>
+<nz-drawer
+  [nzClosable]="false"
+  [nzVisible]="drawerOpen"
+  [nzWidth]="1000"
+  [nzPlacement]="'left'"
+  class="edit-record-drawer"
+  nzTitle="Изменить"
+  (nzOnClose)="closeDrawer()"
+>
+  <form *nzDrawerContent nz-form [nzLayout]="'vertical'" (ngSubmit)="submitForm()">
+    <nz-form-item class="edit-record-drawer">
+
+      <div class="drawer-source-link">
+        <a [href]="selectedRecord.link" target="_blank">{{ selectedRecord?.title }}</a>
+      </div>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="5">Домашние животные</nz-form-label>
+        <nz-form-control [nzSpan]="12" nzHasFeedback>
+          <nz-select name="animalsStatus" [(ngModel)]="selectedRecord.animalsStatus" (ngModelChange)="log($event)">
+            <nz-option *ngFor="let enum of AnimalsStatus | keyvalue"
+                       [nzValue]="enum.key"
+                       [nzLabel]="enum.value"
+            >{{ enum.key }}</nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="5">Ванная(ые) комнаты</nz-form-label>
+        <nz-form-control [nzSpan]="12" nzHasFeedback>
+          <nz-select name="bathroomStatus" [(ngModel)]="selectedRecord.bathroomStatus">
+            <nz-option *ngFor="let enum of BathroomStatus | keyvalue" [nzValue]="enum.key"
+                       [nzLabel]="enum.value"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control [nzSpan]="12" [nzOffset]="5">
+          <button nz-button nzType="primary">Сохранить</button>
+        </nz-form-control>
+      </nz-form-item>
+
+    </nz-form-item>
+  </form>
+</nz-drawer>

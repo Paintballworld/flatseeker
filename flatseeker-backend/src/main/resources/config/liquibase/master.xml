@@ -17,5 +17,7 @@
   <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/00001_ApartmentRecord_create.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/00002_ApartmentRecord_alter.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/00003_ApartmentRecord_alter.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/00004_ApartmentRecord_alter.xml" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>

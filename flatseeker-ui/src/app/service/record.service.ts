@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { environment } from "../../environments/environment";
 import { RecordRow } from "../model/RecordRow";
 import { Observable } from "rxjs";
+import { ApartmentRecord } from "../model/ApartmentRecord";
 
 @Injectable({providedIn: 'root'})
 export class RecordService {
@@ -10,8 +11,20 @@ export class RecordService {
   constructor(private http: HttpClient) {
   }
 
-  getRecords(): Observable<RecordRow[]> {
+  getRecordRows(): Observable<RecordRow[]> {
     return this.http.get<RecordRow[]>(`${environment.apiUrl}/records/`);
+  }
+
+  getRecords(): Observable<ApartmentRecord[]> {
+    return this.http.get<ApartmentRecord[]>(`${environment.apiUrl}/records/`);
+  }
+
+  getRecord(id: string): Observable<ApartmentRecord> {
+    return this.http.get<ApartmentRecord>(`${environment.apiUrl}/records/${id}`);
+  }
+
+  updateRecord(record: ApartmentRecord): Observable<any> {
+    return this.http.put(`${environment.apiUrl}/records/`, record);
   }
 
 }

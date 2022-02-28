@@ -22,6 +22,11 @@ import { RecordListComponent } from './pages/record-list/record-list.component';
 import { NzListModule } from 'ng-zorro-antd/list';
 import { JwtInterceptor } from "./infrastructure/interceptor/jwt.interceptor";
 import { ErrorInterceptor } from "./infrastructure/interceptor/error.interceptor";
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzDrawerModule } from 'ng-zorro-antd/drawer';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzMessageModule } from 'ng-zorro-antd/message';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 
 registerLocaleData(en);
 
@@ -49,7 +54,12 @@ registerLocaleData(en);
     NzInputModule,
     NzMenuModule,
     NzListModule,
-    NzBadgeModule
+    NzBadgeModule,
+    NzToolTipModule,
+    NzDrawerModule,
+    NzFormModule,
+    NzMessageModule,
+    NzSelectModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},

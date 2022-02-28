@@ -1,0 +1,9 @@
+export enum LocationStatus {
+
+  CLOSE = "CLOSE",
+  MEDIUM = "MEDIUM",
+  LONG_AWAY = "LONG_AWAY",
+  FREE_WAY_CLOSE = "FREE_WAY_CLOSE",
+  FREE_WAY_MEDIUM = "FREE_WAY_MEDIUM",
+
+}

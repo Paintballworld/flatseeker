@@ -13,10 +13,57 @@
   border-radius: 6px;
 }
 
+.platform-avatar {
+  background-color: forestgreen;
+  margin: 0 12px;
+  vertical-align: middle;
+}
+
+.record-image {
+  width: 272px;
+  height: 200px;
+  object-fit: contain;
+}
+
+
 .platform-badge {
   background-color: forestgreen;
   color: white;
   font-weight: bolder;
   padding: 2px 15px;
   border-radius: 12px;
+  cursor: pointer;
+}
+
+.record-status {
+  background-color: #22278b;
+  color: white;
+  font-weight: bolder;
+  padding: 2px 15px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+[nz-form] {
+  max-width: 1200px;
+}
+
+.phone-select {
+  width: 70px;
+}
+
+.register-are {
+  margin-bottom: 8px;
+}
+
+.clickable-area {
+  display: block;
+}
+
+.edit-record-drawer {
+  /*width: 1200px;*/
+}
+
+.drawer-source-link {
+  margin: 24px 0;
 }

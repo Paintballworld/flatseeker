@@ -24,10 +24,20 @@ public class RecordServiceImpl implements RecordService {
     }
 
     @Override
+    public Optional<ApartmentRecord> loadById(String recordId) {
+        return repository.findById(recordId);
+    }
+
+    @Override
     public Optional<List<ApartmentRecord>> loadByPlatformName(String platformName) {
         return Optional.ofNullable(aptPlatformMap.get(platformName)) // checking if given platform exists
           .map(AptPlatform::name)
-          .map(repository::findAllByPlatformName);
+          .map(repository::findAllByPlatformNameOrderByInsertedAt);
+    }
+
+    @Override
+    public void update(ApartmentRecord record) {
+        repository.save(record);
     }
 
 }

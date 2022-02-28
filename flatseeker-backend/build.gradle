@@ -14,8 +14,6 @@ plugins {
   id "com.moowork.node" version "1.2.0"
 }
 
-sourceCompatibility = '11'
-
 configurations {
   compileOnly {
     extendsFrom annotationProcessor
@@ -29,7 +27,7 @@ repositories {
 
 dependencies {
 
-  runtimeOnly project(':flatseeker-ui')
+  implementation project(':flatseeker-ui')
 
   implementation 'org.springframework.boot:spring-boot-starter-security'
   implementation 'org.springframework.boot:spring-boot-starter-web'
