@@ -24,7 +24,7 @@
         [class.truncated-status]="!areEqual(item.processStatus, enum.key)"
         nz-tooltip nzTooltipTitle="{{ enum.value }}">
             <span class="record-status" (click)="updateProcessStatus(item, enum.key)"
-            [ngClass]="enum.key">
+                  [ngClass]="enum.key">
             {{ enum.value }}
             </span>
       </li>
@@ -120,15 +120,32 @@
 
       <nz-form-item class="form-item">
         <nz-form-label class="form-item-label">
-          Ссылка на координаты:
-          <a *ngIf="selectedRecord.location != null" [href]="selectedRecord.location" target="_blank">ссылка</a>
+          Ссылка на координаты -
+          <a *ngIf="selectedRecord.location" [href]="selectedRecord.location" target="_blank">ссылка</a>
         </nz-form-label>
         <nz-form-control nzHasFeedback>
-          <nz-input-group nzPrefixIcon="user">
-              <input nz-input formControlName="location" [(ngModel)]="selectedRecord.location"  placeholder="Ссылка на Гугл координаты"/>
-          </nz-input-group>
+          <input nz-input formControlName="location" [(ngModel)]="selectedRecord.location"
+                 placeholder="Ссылка на Гугл координаты"/>
         </nz-form-control>
       </nz-form-item>
+
+
+      <nz-form-item class="form-item">
+        <nz-form-label class="form-item-label">
+          Комментарии
+        </nz-form-label>
+        <nz-form-control nzHasFeedback>
+          <textarea
+            nz-input
+            [(ngModel)]="selectedRecord.comment"
+            placeholder="Здесь можно оставить комментарии"
+            [nzAutosize]="{ minRows: 2, maxRows: 6 }"
+          ></textarea>
+        </nz-form-control>
+      </nz-form-item>
+
+
+
 
 
       <nz-form-item class="form-item">
