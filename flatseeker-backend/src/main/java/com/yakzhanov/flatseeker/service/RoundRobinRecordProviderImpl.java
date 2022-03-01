@@ -78,7 +78,7 @@ public class RoundRobinRecordProviderImpl implements RecordProvider {
           .orElse(Collections.emptyList());
 
         apartmentRecordRepository.loadLinkOnly(platform.name())
-          .forEach(existingLink -> linkDataList.removeIf(linkData -> linkData.getLink().equals(existingLink)));
+          .forEach(existingLink -> linkDataList.removeIf(linkData -> compareLinks(existingLink, linkData)));
 
         if (linkDataList.isEmpty()) {
             log.info("Platform '{}' is exhausted and therefore will be ignored for {} ms", platform.name(), Constants.NEW_ADS_AWAIT_TIMEOUT);
@@ -91,6 +91,10 @@ public class RoundRobinRecordProviderImpl implements RecordProvider {
           .map(LinkData::getUrl)
           .filter(Objects::nonNull)
           .collect(Collectors.toCollection(ConcurrentLinkedDeque::new));
+    }
+
+    private boolean compareLinks(String existingLink, LinkData linkData) {
+        return linkData.getLink().replaceFirst("www\\.", "").equals(existingLink.replaceFirst("www\\.", ""));
     }
 
     private void warnIfNull(LinkData linkData, AptPlatform platform) {

@@ -39,6 +39,9 @@
       <nz-list-item-action>
         {{ item.locationStatus   }}
       </nz-list-item-action>
+      <nz-list-item-action>
+        {{ getStatusDictValue(item.processStatus)}}
+      </nz-list-item-action>
     </ul>
     <nz-list-item-extra>
       <a href="{{ item.link }}" target="_blank">

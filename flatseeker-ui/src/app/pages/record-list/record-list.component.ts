@@ -175,4 +175,12 @@ export class RecordListComponent implements OnInit {
     boolean {
     return JSON.stringify(enumValue) === JSON.stringify(enumIterable);
   }
+
+  getStatusDictValue(status: ProcessStatus): boolean {
+    let active = this.processStatuses
+      .filter(dict => this.areEqual(status, dict.key))
+      .map(dict => dict.active)
+      .pop();
+    return active != undefined ? active : false;
+  }
 }
