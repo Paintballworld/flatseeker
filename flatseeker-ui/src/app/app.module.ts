@@ -28,6 +28,8 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { NzStepsModule } from 'ng-zorro-antd/steps';
+import { NzAffixModule } from 'ng-zorro-antd/affix';
 
 registerLocaleData(en);
 
@@ -35,7 +37,7 @@ registerLocaleData(en);
   declarations: [
     AppComponent,
     LoginComponent,
-    RecordListComponent
+    RecordListComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,7 +63,9 @@ registerLocaleData(en);
     NzFormModule,
     NzMessageModule,
     NzSelectModule,
-    NzInputNumberModule
+    NzInputNumberModule,
+    NzStepsModule,
+    NzAffixModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},

@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import com.yakzhanov.flatseeker.model.ApartmentRecord;
 import com.yakzhanov.flatseeker.model.ProcessStatus;
+import com.yakzhanov.flatseeker.model.RecordEvent;
+import com.yakzhanov.flatseeker.model.dto.SubmitCommentRequest;
 
 public interface RecordService {
 
@@ -12,6 +14,10 @@ public interface RecordService {
     Optional<ApartmentRecord> loadById(String recordId);
 
     Optional<List<ApartmentRecord>> loadByPlatformName(String platformName);
+
+    Optional<List<RecordEvent>> loadRecordEvents(String recordId);
+
+    Optional<List<RecordEvent>> submitComment(SubmitCommentRequest request);
 
     void update(ApartmentRecord record);
 

@@ -1,7 +1,10 @@
-<button nz-button nzType="primary" (click)="refresh()">
-  <i nz-icon nzType="poweroff"></i>
-  Refresh
-</button>
+<nz-affix [nzOffsetTop]="10" (click)="refresh()">
+  <button nz-button nzType="primary" >
+    <i nz-icon nzType="reload" nzTheme="outline"></i>
+    Refresh
+  </button>
+</nz-affix>
+
 <nz-list nzItemLayout="vertical" [nzLoading]="loading">
   <nz-list-item *ngFor="let item of records" class="list-item-record">
     <nz-list-item-meta (click)="editRecord(item.id)">
@@ -18,24 +21,24 @@
          class="cut-text">{{ (item.description.length > 500) ? (item.description | slice:0:500) + '..' : (item.description)}}</div>
     <ul class="record-status-list">
       <li
-        *ngFor="let enum of ProcessStatus | keyvalue"
+        *ngFor="let status of processStatuses"
         class="record-status-list-item"
-        [class.record-status-list-selected]="areEqual(item.processStatus, enum.key)"
-        [class.truncated-status]="!areEqual(item.processStatus, enum.key)"
-        nz-tooltip nzTooltipTitle="{{ enum.value }}">
-            <span class="record-status" (click)="updateProcessStatus(item, enum.key)"
-                  [ngClass]="enum.key">
-            {{ enum.value }}
+        [class.record-status-list-selected]="areEqual(item.processStatus, status.key)"
+        [class.truncated-status]="!areEqual(item.processStatus, status.key)"
+        nz-tooltip nzTooltipTitle="{{ status.title }}">
+            <span class="record-status" (click)="updateProcessStatus(item, status.key)"
+                  [style]=" { backgroundColor: status.color }">
+            {{ status.title }}
             </span>
       </li>
     </ul>
     <ul nz-list-item-actions>
       <nz-list-item-action class="record-item-date">
-        {{ item.createdAt | date:'longDate'}}
+        {{ item.createdAt | date:'longDate' }}
       </nz-list-item-action>
-      <!--      <nz-list-item-action>-->
-      <!--        -->
-      <!--      </nz-list-item-action>-->
+      <nz-list-item-action>
+        {{ item.locationStatus }}
+      </nz-list-item-action>
     </ul>
     <nz-list-item-extra>
       <a href="{{ item.link }}" target="_blank">
@@ -56,9 +59,8 @@
   nzTitle="Изменить"
   (nzOnClose)="closeDrawer()"
 >
-  <form *nzDrawerContent nz-form [nzLayout]="'vertical'" (ngSubmit)="submitForm()">
-    <nz-form-item class="edit-record-drawer">
-
+  <div *nzDrawerContent>
+    <form nz-form [nzLayout]="'vertical'" (ngSubmit)="submitForm()">
       <h2 class="drawer-source-link">
         <a [href]="selectedRecord.link" target="_blank">{{ selectedRecord?.title }}</a>
       </h2>
@@ -124,29 +126,10 @@
           <a *ngIf="selectedRecord.location" [href]="selectedRecord.location" target="_blank">ссылка</a>
         </nz-form-label>
         <nz-form-control nzHasFeedback>
-          <input nz-input formControlName="location" [(ngModel)]="selectedRecord.location"
+          <input nz-input [(ngModel)]="selectedRecord.location"
                  placeholder="Ссылка на Гугл координаты"/>
         </nz-form-control>
       </nz-form-item>
-
-
-      <nz-form-item class="form-item">
-        <nz-form-label class="form-item-label">
-          Комментарии
-        </nz-form-label>
-        <nz-form-control nzHasFeedback>
-          <textarea
-            nz-input
-            [(ngModel)]="selectedRecord.comment"
-            placeholder="Здесь можно оставить комментарии"
-            [nzAutosize]="{ minRows: 2, maxRows: 6 }"
-          ></textarea>
-        </nz-form-control>
-      </nz-form-item>
-
-
-
-
 
       <nz-form-item class="form-item">
         <nz-form-control [nzSpan]="6" [nzOffset]="20">
@@ -154,6 +137,30 @@
         </nz-form-control>
       </nz-form-item>
 
-    </nz-form-item>
-  </form>
+      <div class="record-event-history-block">
+        <nz-form-label class="form-item-label">
+          Комментарии
+        </nz-form-label>
+        <nz-form-control>
+          <textarea
+            nz-input
+            [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="newCommentField"
+            placeholder="Здесь можно оставить комментарии"
+            [nzAutosize]="{ minRows: 2, maxRows: 6 }"
+            (keydown.enter)="submitComment()"
+          ></textarea>
+        </nz-form-control>
+        <nz-steps [nzCurrent]="0" nzProgressDot nzDirection="vertical">
+          <nz-step
+            *ngFor="let event of selectedRecordEvents"
+            nzTitle="{{ event.createdAt | date:'medium'}}"
+            [nzDescription]="event.details">
+          </nz-step>
+        </nz-steps>
+      </div>
+    </form>
+  </div>
+
+
 </nz-drawer>

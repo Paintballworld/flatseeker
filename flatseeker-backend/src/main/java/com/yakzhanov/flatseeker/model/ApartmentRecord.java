@@ -2,6 +2,8 @@ package com.yakzhanov.flatseeker.model;
 
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,7 +35,9 @@ public class ApartmentRecord {
 
     private Boolean conditioner;
 
+    @Enumerated(EnumType.STRING)
     private AnimalsStatus animalsStatus;
+    @Enumerated(EnumType.STRING)
     private BathroomStatus bathroomStatus;
 
     private String location;
@@ -46,9 +50,11 @@ public class ApartmentRecord {
 
 
     // Service
+    @Enumerated(EnumType.STRING)
     private LocationStatus locationStatus;
     private String link;
     private String platformName;
+    @Enumerated(EnumType.STRING)
     private ProcessStatus processStatus;
     private String comment;
     private Date insertedAt;

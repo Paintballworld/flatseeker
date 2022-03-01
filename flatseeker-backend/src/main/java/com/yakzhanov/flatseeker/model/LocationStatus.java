@@ -12,9 +12,9 @@ public enum LocationStatus {
     ;
 
     @Getter
-    private final String description;
+    private final String title;
 
-    LocationStatus(String description) {
-        this.description = description;
+    LocationStatus(String title) {
+        this.title = title;
     }
 }
