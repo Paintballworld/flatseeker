@@ -119,3 +119,17 @@
   opacity: 1;
   transition: opacity 300ms;
 }
+
+.duplicate-row-platform {
+  background-color: green;
+  color: white;
+  border-radius: 12px;
+  margin-right: 12px;
+  padding: 3px 12px;
+}
+
+.duplicate-row-date {
+  font-weight: lighter;
+  align-self: end;
+  margin-left: 36px;
+}

@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import com.yakzhanov.flatseeker.model.ApartmentRecord;
+import com.yakzhanov.flatseeker.model.DuplicateRecord;
 import com.yakzhanov.flatseeker.model.ProcessStatus;
 import com.yakzhanov.flatseeker.model.RecordEvent;
 import com.yakzhanov.flatseeker.model.dto.SubmitCommentRequest;
 import com.yakzhanov.flatseeker.platform.AptPlatform;
 import com.yakzhanov.flatseeker.repository.ApartmentRecordRepository;
+import com.yakzhanov.flatseeker.repository.DuplicateRecordRepository;
 import com.yakzhanov.flatseeker.repository.RecordEventRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +23,7 @@ public class RecordServiceImpl implements RecordService {
 
     private final ApartmentRecordRepository recordRepository;
     private final RecordEventRepository eventRepository;
+    private final DuplicateRecordRepository duplicateRecordRepository;
     private final Map<String, AptPlatform> aptPlatformMap;
 
     @Override
@@ -38,6 +41,11 @@ public class RecordServiceImpl implements RecordService {
         return Optional.ofNullable(aptPlatformMap.get(platformName)) // checking if given platform exists
           .map(AptPlatform::name)
           .map(recordRepository::findAllByPlatformNameOrderByInsertedAt);
+    }
+
+    @Override
+    public Optional<List<DuplicateRecord>> loadDuplicates(String originalRecordId) {
+        return Optional.of(duplicateRecordRepository.findAllByOriginalRecordId(originalRecordId));
     }
 
     @Override

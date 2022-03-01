@@ -15,6 +15,7 @@ import { BathroomStatusDict } from "../../model/dict/BathroomStatusDict";
 import { LocationStatusDict } from "../../model/dict/LocationStatusDict";
 import { ProcessStatusDict } from "../../model/dict/ProcessStatusDict";
 import { RecordEvent } from "../../model/RecordEvent";
+import { DuplicateRow } from "../../model/DuplicateRow";
 
 @Component({
   selector: 'app-record-list',
@@ -43,7 +44,9 @@ export class RecordListComponent implements OnInit {
   bathroomStatuses: BathroomStatusDict[] = [];
   locationStatuses: LocationStatusDict[] = [];
   processStatuses: ProcessStatusDict[] = [];
+
   selectedRecordEvents: RecordEvent[] = [];
+  duplicateList: DuplicateRow[] = [];
 
   newCommentField: string = "";
 
@@ -117,11 +120,16 @@ export class RecordListComponent implements OnInit {
         next: list => this.selectedRecordEvents = list,
         error: message => console.log("Error on event update:", message)
       })
+    this.recordService.loadDuplicates(id)
+      .subscribe({
+        next: list => this.duplicateList = list,
+        error: message => this.handleError(message)
+      })
   }
 
   private handleError(message: any) {
     this.closeDrawer();
-    this.message.error("Ошибка загрузки Объявления", message);
+    this.message.error("Ошибка загрузки: " + message);
   }
 
   closeDrawer(): void {

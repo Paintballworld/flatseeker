@@ -30,6 +30,8 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzStepsModule } from 'ng-zorro-antd/steps';
 import { NzAffixModule } from 'ng-zorro-antd/affix';
+import { NzCollapseModule } from 'ng-zorro-antd/collapse';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
 
 registerLocaleData(en);
 
@@ -65,7 +67,9 @@ registerLocaleData(en);
     NzSelectModule,
     NzInputNumberModule,
     NzStepsModule,
-    NzAffixModule
+    NzAffixModule,
+    NzCollapseModule,
+    NzTabsModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},

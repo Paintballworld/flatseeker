@@ -6,6 +6,7 @@ import { Observable } from "rxjs";
 import { ApartmentRecord } from "../model/ApartmentRecord";
 import { ProcessStatus } from "../model/ProcessStatus";
 import { RecordEvent } from "../model/RecordEvent";
+import { DuplicateRow } from "../model/DuplicateRow";
 
 @Injectable({providedIn: 'root'})
 export class RecordService {
@@ -41,7 +42,10 @@ export class RecordService {
   submitComment(id: string, comment: string): Observable<any> {
     let submitComment = {"id": id, "comment": comment};
     return this.http.post<RecordEvent[]>(`${environment.apiUrl}/records/events/`, submitComment);
+  }
 
+  loadDuplicates(id: string): Observable<DuplicateRow[]> {
+    return this.http.get<DuplicateRow[]>(`${environment.apiUrl}/records/duplicates/${id}`);
   }
 
 }
