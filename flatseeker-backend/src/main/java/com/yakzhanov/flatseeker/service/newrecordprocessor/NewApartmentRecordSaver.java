@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class NewApartmentRecordSaver implements NewApartmentRecordProcessor {
+public class NewApartmentRecordSaver implements NewApartmentRecordConsumer {
 
     private final ApartmentRecordRepository apartmentRecordRepository;
 

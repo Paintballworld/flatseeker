@@ -1,6 +1,6 @@
 package com.yakzhanov.flatseeker.scheduler;
 
-import com.yakzhanov.flatseeker.service.NewApartmentRecordStrategy;
+import com.yakzhanov.flatseeker.service.NewApartmentRecordProcessor;
 import com.yakzhanov.flatseeker.service.RecordProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,12 +13,12 @@ import org.springframework.stereotype.Component;
 public class UpdateNewRecordsScheduler {
 
     private final RecordProvider recordProvider;
-    private final NewApartmentRecordStrategy newApartmentRecordStrategy;
+    private final NewApartmentRecordProcessor newApartmentRecordProcessor;
 
     @Scheduled(fixedDelay = 60_000L, initialDelay = 2_000L)
     public void loadOneNewPageAndSave() {
         recordProvider.nextRecord()
-          .ifPresentOrElse(newApartmentRecordStrategy::process, () -> log.info("No record loaded - skipping..."));
+          .ifPresentOrElse(newApartmentRecordProcessor::process, () -> log.info("No record loaded - skipping..."));
     }
 
 }
