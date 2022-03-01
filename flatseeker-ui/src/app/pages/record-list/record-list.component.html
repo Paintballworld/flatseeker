@@ -43,7 +43,8 @@
     <nz-list-item-extra>
       <a href="{{ item.link }}" target="_blank">
         <nz-badge [nzDot]="false">
-          <img class="record-image" alt="logo" [src]="item.mainImageUrl"/>
+          <img *ngIf="item.mainImageUrl" class="record-image" [alt]="item.title" [src]="item.mainImageUrl"/>
+          <nz-empty *ngIf="!item.mainImageUrl" class="record-image"></nz-empty>
         </nz-badge>
       </a>
     </nz-list-item-extra>
