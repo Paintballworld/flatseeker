@@ -4,7 +4,6 @@ import { environment } from "../../environments/environment";
 import { RecordRow } from "../model/RecordRow";
 import { Observable } from "rxjs";
 import { ApartmentRecord } from "../model/ApartmentRecord";
-import { ProcessStatus } from "../model/ProcessStatus";
 import { RecordEvent } from "../model/RecordEvent";
 import { DuplicateRow } from "../model/DuplicateRow";
 

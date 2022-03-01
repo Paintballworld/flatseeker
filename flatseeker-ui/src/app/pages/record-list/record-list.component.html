@@ -37,7 +37,7 @@
         {{ item.createdAt | date:'longDate' }}
       </nz-list-item-action>
       <nz-list-item-action>
-        {{ item.locationStatus }}
+        {{ item.locationStatus   }}
       </nz-list-item-action>
     </ul>
     <nz-list-item-extra>
@@ -51,6 +51,11 @@
   </nz-list-item>
   <nz-list-empty *ngIf="records.length === 0"></nz-list-empty>
 </nz-list>
+
+
+
+
+
 <nz-drawer
   [nzClosable]="false"
   [nzVisible]="drawerOpen"
@@ -119,8 +124,8 @@
                                [nzMin]="0"
                                [nzStep]="100"
                                [nzFormatter]="formatterZloty"
-                               [nzParser]="parserZloty"
-              ></nz-input-number>
+                               [nzParser]="parserZloty">
+              </nz-input-number>
             </nz-form-control>
           </nz-form-item>
 
@@ -130,8 +135,7 @@
               <a *ngIf="selectedRecord.location" [href]="selectedRecord.location" target="_blank">ссылка</a>
             </nz-form-label>
             <nz-form-control nzHasFeedback>
-              <input nz-input [(ngModel)]="selectedRecord.location"
-                     placeholder="Ссылка на Гугл координаты"/>
+              <input [ngModelOptions]="{standalone: true}" nz-input id="location" [(ngModel)]="selectedRecord.location" placeholder="Ссылка на Гугл координаты"/>
             </nz-form-control>
           </nz-form-item>
 
@@ -165,9 +169,9 @@
           </div>
         </form>
       </nz-tab>
-      <nz-tab nzTitle="Похожие объявления {{ duplicateList.length }}">
+      <nz-tab *ngIf="duplicateList.length > 0" nzTitle="Похожие объявления {{ duplicateList.length }}">
         <nz-list nzBordered nzSize="small">
-          <!--          <nz-list-header>Header</nz-list-header>-->
+          <nz-list-header >Объявления с идентичным наименованием:</nz-list-header>
           <nz-list-item *ngFor="let duplicate of duplicateList">
             <a [href]="duplicate.link">
               <span class="duplicate-row-platform" >{{ duplicate.platformName}}</span>

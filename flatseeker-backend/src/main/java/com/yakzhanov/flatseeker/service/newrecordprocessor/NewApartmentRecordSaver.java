@@ -1,5 +1,6 @@
 package com.yakzhanov.flatseeker.service.newrecordprocessor;
 
+import java.util.Date;
 import com.yakzhanov.flatseeker.model.ApartmentRecord;
 import com.yakzhanov.flatseeker.model.DuplicateRecord;
 import com.yakzhanov.flatseeker.repository.ApartmentRecordRepository;
@@ -25,6 +26,7 @@ public class NewApartmentRecordSaver implements NewApartmentRecordConsumer {
     @Override
     public void process(ApartmentRecord newRecord) {
         log.info("Saving {}", newRecord.getTitle());
+        newRecord.setInsertedAt(new Date());
         apartmentRecordRepository.findFirstByTitle(newRecord.getTitle())
           .ifPresentOrElse(
             original -> processDuplicate(newRecord, original),

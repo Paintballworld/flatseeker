@@ -12,8 +12,8 @@ public enum ProcessStatus {
     MEETING_SCHEDULED("Встреча назначена", "cornflowerblue"),
     WAITING_CONFIRMATION("Ожидает решения (мы)", "orange"),
     WAITING_DECISION("Ожидает решения (владельцы)", "darkred"),
-    REJECTED_OWNER("Отклонено (мы)", "gray"),
-    REJECTED_ME("Отклонено (владельцы)", "gray"),
+    REJECTED_OWNER("Отклонено (владельцы)", "gray"),
+    REJECTED_ME("Отклонено (мы)", "gray"),
     OUTDATED("Просрочено", "gray"),
     DUPLICATE("Дубликат", "gray"),
     ;

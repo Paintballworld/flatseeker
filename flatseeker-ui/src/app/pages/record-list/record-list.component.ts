@@ -7,7 +7,6 @@ import { AnimalsStatus } from "../../model/AnimalsStatus";
 import { BathroomStatus } from "../../model/BathroomStatus";
 import { LocationStatus } from "../../model/LocationStatus";
 import { ApartmentType } from "../../model/ApartmentType";
-import { ProcessStatus } from '../../model/ProcessStatus';
 import { DictService } from "../../service/dict.service";
 import { AnimalStatusDict } from "../../model/dict/AnimalStatusDict";
 import { ApartmentTypeDict } from "../../model/dict/ApartmentTypeDict";
@@ -16,6 +15,7 @@ import { LocationStatusDict } from "../../model/dict/LocationStatusDict";
 import { ProcessStatusDict } from "../../model/dict/ProcessStatusDict";
 import { RecordEvent } from "../../model/RecordEvent";
 import { DuplicateRow } from "../../model/DuplicateRow";
+import { ProcessStatus } from 'src/app/model/ProcessStatus';
 
 @Component({
   selector: 'app-record-list',
