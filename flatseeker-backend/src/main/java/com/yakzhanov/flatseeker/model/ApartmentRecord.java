@@ -56,7 +56,6 @@ public class ApartmentRecord {
     private String platformName;
     @Enumerated(EnumType.STRING)
     private ProcessStatus processStatus;
-    private String comment;
     private Date insertedAt;
 
 

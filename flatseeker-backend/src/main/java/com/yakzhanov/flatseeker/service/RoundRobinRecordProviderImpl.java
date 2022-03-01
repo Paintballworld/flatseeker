@@ -79,6 +79,7 @@ public class RoundRobinRecordProviderImpl implements RecordProvider {
           .map(platform::extractSearchPageLinks)
           .orElse(Collections.emptyList());
 
+        // TODO: 01.03.2022 design upsert mechanism
         apartmentRecordRepository.loadTitleOnly(platform.name())
           .forEach(existingTitle -> linkDataList.removeIf(linkData -> linkData.getTitle().equals(existingTitle)));
 

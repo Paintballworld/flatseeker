@@ -2,6 +2,9 @@
   background-color: white !important
 }
 
+.body {
+  background-color: gray;
+}
 .ant-layout-header {
   background-color: white;
 }

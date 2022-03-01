@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+
+  <changeSet id="008-01" author="yakzhanov">
+    <dropUniqueConstraint tableName="apartment_record" constraintName="apartment_record_title_key"/>
+    <dropUniqueConstraint tableName="apartment_record" constraintName="apartment_record_title_key1"/>
+  </changeSet>
+
+  <changeSet id="008-02" author="yakzhanov">
+    <createTable tableName="duplicate_record">
+      <column name="id" type="varchar(100)" defaultValue="nextVal('sequence_generator')">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="title" type="VARCHAR(100)"/>
+      <column name="description" type="VARCHAR(5000)"/>
+      <column name="rent_price" type="INT"/>
+      <column name="fee_price" type="INT"/>
+      <column name="deposit" type="INT"/>
+      <column name="area" type="INT"/>
+      <column name="conditioner" type="boolean"/>
+      <column name="animals_status" type="VARCHAR(30)"/>
+      <column name="bathroom_status" type="VARCHAR(30)"/>
+      <column name="location" type="VARCHAR(100)"/>
+      <column name="type" type="VARCHAR(30)"/>
+      <column name="created_at" type="timestamp"/>
+      <column name="main_image_url" type="VARCHAR(300)"/>
+      <column name="location_status" type="VARCHAR(30)"/>
+      <column name="link" type="VARCHAR(300)"/>
+      <column name="platform_name" type="VARCHAR(60)"/>
+      <column name="original_record_id" type="varchar(100)"/>
+    </createTable>
+
+    <addForeignKeyConstraint baseTableName="duplicate_record"
+                             baseColumnNames="original_record_id"
+                             constraintName="original_apartment_record_id_reference"
+                             referencedTableName="apartment_record"
+                             referencedColumnNames="id"/>
+
+  </changeSet>
+</databaseChangeLog>
