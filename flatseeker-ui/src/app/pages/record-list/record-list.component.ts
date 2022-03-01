@@ -106,8 +106,9 @@ export class RecordListComponent implements OnInit {
     console.log("Trying to update status of:", itemId);
   }
 
-  editRecord(id: string): void {
-    this.recordService.getRecord(id)
+  editRecord(recordRow: RecordRow): void {
+    recordRow.viewed = true;
+    this.recordService.getRecord(recordRow.id)
       .subscribe({
         next: data => {
           this.selectedRecord = data;
@@ -115,12 +116,12 @@ export class RecordListComponent implements OnInit {
         },
         error: message => this.handleError(message)
       });
-    this.recordService.getEvents(id)
+    this.recordService.getEvents(recordRow.id)
       .subscribe({
         next: list => this.selectedRecordEvents = list,
         error: message => console.log("Error on event update:", message)
       })
-    this.recordService.loadDuplicates(id)
+    this.recordService.loadDuplicates(recordRow.id)
       .subscribe({
         next: list => this.duplicateList = list,
         error: message => this.handleError(message)

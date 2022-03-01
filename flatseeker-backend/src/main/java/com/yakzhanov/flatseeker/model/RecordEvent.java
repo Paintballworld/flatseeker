@@ -48,4 +48,13 @@ public class RecordEvent {
         return event;
     }
 
+    public static RecordEvent forViewedFirst(String apartmentRecordId) {
+        RecordEvent event = new RecordEvent();
+        event.id = UUID.randomUUID().toString();
+        event.setApartmentRecordId(apartmentRecordId);
+        event.setDetails("Просмотрено впервые");
+        event.setCreatedAt(new Date());
+        return event;
+    }
+
 }

@@ -7,17 +7,17 @@
 
 <nz-list nzItemLayout="vertical" [nzLoading]="loading">
   <nz-list-item *ngFor="let item of records" class="list-item-record">
-    <nz-list-item-meta (click)="editRecord(item.id)">
-      <nz-list-item-meta-title (click)="editRecord(item.id)">
+    <nz-list-item-meta (click)="editRecord(item)">
+      <nz-list-item-meta-title (click)="editRecord(item)">
         {{ item.title }}
         <span class="total-price">{{ item.feePrice ? (item.feePrice + item.rentPrice) : item.rentPrice + "*"}}</span>
         <span class="rent-price">({{ item.rentPrice }} + {{ item.feePrice ? item.feePrice : ".." }})</span>
       </nz-list-item-meta-title>
-      <nz-list-item-meta-description (click)="editRecord(item.id)">
+      <nz-list-item-meta-description (click)="editRecord(item)">
         {{ item.platformName }}
       </nz-list-item-meta-description>
     </nz-list-item-meta>
-    <div (click)="editRecord(item.id)"
+    <div (click)="editRecord(item)"
          class="cut-text">{{ (item.description.length > 500) ? (item.description | slice:0:500) + '..' : (item.description)}}</div>
     <ul class="record-status-list">
       <li
@@ -44,12 +44,14 @@
       </nz-list-item-action>
     </ul>
     <nz-list-item-extra>
+      <nz-badge [nzDot]="!item.viewed">
       <a href="{{ item.link }}" target="_blank">
         <nz-badge [nzDot]="false">
           <img *ngIf="item.mainImageUrl" class="record-image" [alt]="item.title" [src]="item.mainImageUrl"/>
           <nz-empty *ngIf="!item.mainImageUrl" class="record-image"></nz-empty>
         </nz-badge>
       </a>
+      </nz-badge>
     </nz-list-item-extra>
   </nz-list-item>
   <nz-list-empty *ngIf="records.length === 0"></nz-list-empty>

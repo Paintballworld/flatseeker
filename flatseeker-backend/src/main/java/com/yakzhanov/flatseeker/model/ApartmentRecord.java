@@ -57,7 +57,7 @@ public class ApartmentRecord {
     @Enumerated(EnumType.STRING)
     private ProcessStatus processStatus;
     private Date insertedAt;
-
+    private boolean viewed;
 
 }
 

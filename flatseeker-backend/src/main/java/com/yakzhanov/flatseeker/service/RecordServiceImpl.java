@@ -33,7 +33,14 @@ public class RecordServiceImpl implements RecordService {
 
     @Override
     public Optional<ApartmentRecord> loadById(String recordId) {
-        return recordRepository.findById(recordId);
+        var recordOptional = recordRepository.findById(recordId);
+        recordOptional.ifPresent(
+            ignore -> {
+                recordRepository.updateViewedStatus(recordId);
+                eventRepository.save(RecordEvent.forViewedFirst(recordId));
+            }
+        );
+        return recordOptional;
     }
 
     @Override

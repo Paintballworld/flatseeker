@@ -21,6 +21,10 @@
   border-radius: 6px;
 }
 
+.list-item-record-new {
+  background-color: palegreen;
+}
+
 .platform-avatar {
   background-color: forestgreen;
   margin: 0 12px;
