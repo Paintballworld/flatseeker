@@ -19,13 +19,11 @@ import com.yakzhanov.flatseeker.model.LinkData;
 import com.yakzhanov.flatseeker.model.ProcessStatus;
 import com.yakzhanov.flatseeker.platform.AptPlatform;
 import com.yakzhanov.flatseeker.repository.ApartmentRecordRepository;
-import com.yakzhanov.flatseeker.utils.AppUtils;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.context.annotation.Primary;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -79,9 +77,8 @@ public class RoundRobinRecordProviderImpl implements RecordProvider {
           .map(platform::extractSearchPageLinks)
           .orElse(Collections.emptyList());
 
-        // TODO: 01.03.2022 design upsert mechanism
-        apartmentRecordRepository.loadTitleOnly(platform.name())
-          .forEach(existingTitle -> linkDataList.removeIf(linkData -> linkData.getTitle().equals(existingTitle)));
+        apartmentRecordRepository.loadLinkOnly(platform.name())
+          .forEach(existingLink -> linkDataList.removeIf(linkData -> linkData.getLink().equals(existingLink)));
 
         if (linkDataList.isEmpty()) {
             log.info("Platform '{}' is exhausted and therefore will be ignored for {} ms", platform.name(), Constants.NEW_ADS_AWAIT_TIMEOUT);

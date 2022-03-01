@@ -18,8 +18,8 @@ public interface ApartmentRecordRepository extends JpaRepository<ApartmentRecord
 
     Optional<ApartmentRecord> findFirstByTitle(String title);
 
-    @Query("select title from ApartmentRecord where platformName = :platformName order by insertedAt desc, title desc")
-    List<String> loadTitleOnly(String platformName);
+    @Query("select link from ApartmentRecord where platformName = :platformName order by insertedAt desc, title desc")
+    List<String> loadLinkOnly(String platformName);
 
     @Modifying(flushAutomatically = true)
     @Query("update ApartmentRecord set processStatus = :newStatus where id = :id")
