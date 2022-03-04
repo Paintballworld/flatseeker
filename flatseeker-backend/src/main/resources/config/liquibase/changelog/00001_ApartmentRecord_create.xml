@@ -27,7 +27,7 @@
       <column name="platform_name" type="VARCHAR(60)"/>
     </createTable>
 
-   <addUniqueConstraint tableName="apartment_record" columnNames="title"/>
+   <addUniqueConstraint tableName="apartment_record" columnNames="title" constraintName="apartment_record_title_key"/>
 
   </changeSet>
 </databaseChangeLog>

@@ -1,5 +1,6 @@
 package com.yakzhanov.flatseeker.platform;
 
+import static com.yakzhanov.flatseeker.platform.OtodomAptPlatform.NOT_EMPTY;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,10 +23,11 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
 
-@Component("Gumtree")
+@Component(GumtreeAptPlatform.GUMTREE)
 public class GumtreeAptPlatform implements AptPlatform {
 
     private static final Long TIMEOUT = 1000L;
+    public static final String GUMTREE = "Gumtree";
     private final AtomicLong nextCall = new AtomicLong(System.currentTimeMillis());
 
     @Override
@@ -135,7 +137,7 @@ public class GumtreeAptPlatform implements AptPlatform {
 
     @Override
     public String name() {
-        return "Gumtree";
+        return GUMTREE;
     }
 
     @Override
@@ -172,6 +174,7 @@ public class GumtreeAptPlatform implements AptPlatform {
     private Integer readIntValue(Document document, String query) {
         return Optional.ofNullable(readStringValue(document, query))
           .map(str -> str.replaceAll("\\D", ""))
+          .filter(NOT_EMPTY)
           .map(Integer::parseInt)
           .orElse(null);
     }

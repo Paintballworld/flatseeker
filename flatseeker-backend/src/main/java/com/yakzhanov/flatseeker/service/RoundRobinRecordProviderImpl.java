@@ -1,5 +1,6 @@
 package com.yakzhanov.flatseeker.service;
 
+import static com.yakzhanov.flatseeker.utils.AppUtils.parseRecord;
 import java.net.URL;
 import java.util.Collections;
 import java.util.List;
@@ -7,7 +8,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Queue;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -16,7 +16,6 @@ import com.yakzhanov.flatseeker.conf.AppParams;
 import com.yakzhanov.flatseeker.conf.Constants;
 import com.yakzhanov.flatseeker.model.ApartmentRecord;
 import com.yakzhanov.flatseeker.model.LinkData;
-import com.yakzhanov.flatseeker.model.ProcessStatus;
 import com.yakzhanov.flatseeker.platform.AptPlatform;
 import com.yakzhanov.flatseeker.repository.ApartmentRecordRepository;
 import lombok.SneakyThrows;
@@ -31,7 +30,6 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class RoundRobinRecordProviderImpl implements RecordProvider {
 
-    private static final long QUEUE_EXHAUSTED_TIMEOUT_PERIOD = 5_000L;
     private final Map<AptPlatform, AtomicInteger> nextPageForPlatformMap = new ConcurrentHashMap<>();
     private final Map<AptPlatform, Queue<URL>> linksQueueForPlatformMap = new ConcurrentHashMap<>();
     private final ConcurrentLinkedDeque<AptPlatform> platformsRoundRobinQueue = new ConcurrentLinkedDeque<>();
@@ -133,28 +131,6 @@ public class RoundRobinRecordProviderImpl implements RecordProvider {
         platform.updateRequestTime();
         var document = Jsoup.parse(nextAptPageUrl, platform.readTimeoutMillis());
         return parseRecord(document, platform, nextAptPageUrl);
-    }
-
-    private ApartmentRecord parseRecord(Document document, AptPlatform aptPlatform, URL nextAptPageUrl) {
-        return ApartmentRecord.builder()
-          .id(UUID.randomUUID().toString())
-          .title(aptPlatform.extractTitle(document))
-          .link(nextAptPageUrl.toString())
-          .description(aptPlatform.extractDescription(document))
-          .rentPrice(aptPlatform.extractRentPrice(document))
-          .feePrice(aptPlatform.extractFeePrice(document))
-          .deposit(aptPlatform.extractDeposit(document))
-          .area(aptPlatform.extractArea(document))
-          .conditioner(aptPlatform.extractConditioner(document))
-          .animalsStatus(aptPlatform.extractAnimalStatus(document))
-          .bathroomStatus(aptPlatform.extractBathroomStatus(document))
-          .location(aptPlatform.extractLocation(document))
-          .type(aptPlatform.extractApartmentType(document))
-          .platformName(aptPlatform.name())
-          .createdAt(aptPlatform.extractCreatedAt(document))
-          .mainImageUrl(aptPlatform.extractMainImageUrl(document))
-          .processStatus(ProcessStatus.NEW)
-          .build();
     }
 
     @SneakyThrows

@@ -11,15 +11,15 @@ services:
       - POSTGRES_HOST_AUTH_METHOD=trust
     ports:
       - 127.0.0.1:5432:5432
-
-  flatseeker-postgresql-test:
-    image: postgres:13.4
-    #    volumes:
-    #      - ~/volumes/yakzhanov/flatseeker/postgresql/:/var/lib/postgresql/data/
-    environment:
-      - POSTGRES_USER=flatseeker
-      - POSTGRES_DB=flatseeker
-      - POSTGRES_PASSWORD=flatseeker_password_123
-      - POSTGRES_HOST_AUTH_METHOD=trust
-    ports:
-      - 127.0.0.1:5532:5432
+#
+#  flatseeker-postgresql-test:
+#    image: postgres:13.4
+#    #    volumes:
+#    #      - ~/volumes/yakzhanov/flatseeker/postgresql/:/var/lib/postgresql/data/
+#    environment:
+#      - POSTGRES_USER=flatseeker
+#      - POSTGRES_DB=flatseeker
+#      - POSTGRES_PASSWORD=flatseeker_password_123
+#      - POSTGRES_HOST_AUTH_METHOD=trust
+#    ports:
+#      - 127.0.0.1:5532:5432

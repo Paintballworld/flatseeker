@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import com.yakzhanov.flatseeker.conf.AppParams;
@@ -22,16 +23,18 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
 
-@Component("Otodom")
+@Component(OtodomAptPlatform.OTODOM)
 @RequiredArgsConstructor
 public class OtodomAptPlatform implements AptPlatform {
 
+    public static final String OTODOM = "Otodom";
     private static final Long TIMEOUT = 1000L;
+    public static final Predicate<String> NOT_EMPTY = o -> !o.isEmpty() && !o.isBlank();
     private final AtomicLong nextCall = new AtomicLong(System.currentTimeMillis());
 
     @Override
     public String baseUrl() {
-        return "https://www.otodom.pl/";
+        return "https://www.otodom.pl";
     }
 
     @Override
@@ -82,6 +85,7 @@ public class OtodomAptPlatform implements AptPlatform {
           .map(Elements::first)
           .map(Element::text)
           .map(value -> value.replaceAll("\\D", ""))
+          .filter(NOT_EMPTY)
           .map(Integer::parseInt)
           .orElse(null);
     }
@@ -100,6 +104,7 @@ public class OtodomAptPlatform implements AptPlatform {
           .map(Elements::first)
           .map(Element::text)
           .map(value -> value.replaceAll("\\D", ""))
+          .filter(NOT_EMPTY)
           .map(Integer::parseInt)
           .orElse(null);
     }
@@ -124,6 +129,7 @@ public class OtodomAptPlatform implements AptPlatform {
           .map(Elements::first)
           .map(Element::text)
           .map(text -> text.replaceAll("\\D", ""))
+          .filter(NOT_EMPTY)
           .map(Integer::parseInt)
           .orElse(null);
     }
@@ -167,7 +173,7 @@ public class OtodomAptPlatform implements AptPlatform {
 
     @Override
     public String name() {
-        return "Otodom";
+        return OTODOM;
     }
 
     @Override
