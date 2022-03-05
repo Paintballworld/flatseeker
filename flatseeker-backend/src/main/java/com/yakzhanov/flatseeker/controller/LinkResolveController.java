@@ -6,7 +6,6 @@ import com.yakzhanov.flatseeker.model.dto.LinkResolveRequest;
 import com.yakzhanov.flatseeker.service.LinkResolveService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,13 +18,9 @@ public class LinkResolveController {
 
     private final LinkResolveService linkResolveService;
 
-    @GetMapping("/")
+    @PostMapping("/")
     public ResponseEntity<ApartmentRecord> tryToResolve(@RequestBody @Valid LinkResolveRequest request) {
         return ResponseEntity.of(linkResolveService.tryToResolve(request));
     }
 
-    @PostMapping("/")
-    public void saveResolvedRecord(@RequestBody @Valid ApartmentRecord record) {
-        linkResolveService.save(record);
-    }
 }

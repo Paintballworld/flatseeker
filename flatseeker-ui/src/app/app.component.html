@@ -11,6 +11,9 @@
       <li nz-menu-item>
         <a (click)="logout()">Выход</a>
       </li>
+      <li nz-menu-item>
+        <input type="text" nz-input placeholder="input search text" (keyup.enter)="resolveLink()" [(ngModel)]="linkResolveContent"/>
+      </li>
     </ul>
   </nz-header>
   <nz-content>
@@ -19,3 +22,26 @@
     </div>
   </nz-content>
 </nz-layout>
+<nz-modal [(nzVisible)]="showModal" nzTitle="The first Modal" (nzOnCancel)="cancelLink()" (nzOnOk)="saveLink()">
+  <ng-container *nzModalContent>
+    <p>Title: {{ resolvedRecord.title }}</p>
+    <p>Title: {{ resolvedRecord.title }}</p>
+    <p>Title: {{ resolvedRecord.description }}</p>
+    <p>Title: {{ resolvedRecord.rentPrice }}</p>
+    <p>Title: {{ resolvedRecord.feePrice }}</p>
+    <p>Title: {{ resolvedRecord.deposit }}</p>
+    <p>Title: {{ resolvedRecord.area }}</p>
+    <p>Title: {{ resolvedRecord.conditioner }}</p>
+    <p>Title: {{ resolvedRecord.animalsStatus }}</p>
+    <p>Title: {{ resolvedRecord.bathroomStatus }}</p>
+    <p>Title: {{ resolvedRecord.location }}</p>
+    <p>Title: {{ resolvedRecord.type }}</p>
+    <p>Title: {{ resolvedRecord.createdAt }}</p>
+    <p>Title: {{ resolvedRecord.mainImageUrl }}</p>
+    <p>Title: {{ resolvedRecord.locationStatus }}</p>
+    <p>Title: {{ resolvedRecord.link }}</p>
+    <p>Title: {{ resolvedRecord.platformName }}</p>
+    <p>Title: {{ resolvedRecord.processStatus }}</p>
+    <p>Title: {{ resolvedRecord.comment }}</p>
+  </ng-container>
+</nz-modal>

@@ -38,6 +38,11 @@ public class RecordsController {
         return ResponseEntity.of(recordService.loadById(recordId));
     }
 
+    @PostMapping("/")
+    public void saveNewRecord(@RequestBody @Valid ApartmentRecord record) {
+        recordService.saveNew(record);
+    }
+
     @PutMapping("/")
     public void updateRecord(@RequestBody @Valid ApartmentRecord record) {
         recordService.update(record);

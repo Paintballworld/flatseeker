@@ -27,8 +27,7 @@ export class RecordListComponent implements OnInit {
   page: number = 1;
   records: RecordRow[] = [];
   loading: boolean = false;
-  // @ts-ignore
-  selectedRecord: ApartmentRecord = new ApartmentRecord();
+  selectedRecord: ApartmentRecord = ApartmentRecord.mock();
   drawerOpen: boolean = false;
   AnimalsStatus = AnimalsStatus;
   BathroomStatus = BathroomStatus;

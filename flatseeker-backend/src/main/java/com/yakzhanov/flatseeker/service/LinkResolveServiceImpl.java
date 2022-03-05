@@ -27,6 +27,6 @@ public class LinkResolveServiceImpl implements LinkResolveService {
 
     @Override
     public Optional<ApartmentRecord> tryToResolve(@NotNull LinkResolveRequest request) {
-        return Optional.of(linkResolver.resolve(request.getUrlToResolve()));
+        return Optional.of(linkResolver.resolve(request.getLinkToResolve()));
     }
 }

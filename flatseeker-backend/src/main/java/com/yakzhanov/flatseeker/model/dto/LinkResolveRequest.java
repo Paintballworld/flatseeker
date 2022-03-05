@@ -9,5 +9,5 @@ public class LinkResolveRequest {
 
     @NotNull
     @NotEmpty
-    private String urlToResolve;
+    private String linkToResolve;
 }

@@ -20,6 +20,8 @@ public interface RecordService {
 
     Optional<List<RecordEvent>> loadRecordEvents(String recordId);
 
+    void saveNew(ApartmentRecord record);
+
     Optional<List<RecordEvent>> submitComment(SubmitCommentRequest request);
 
     void update(ApartmentRecord record);

@@ -47,4 +47,14 @@ export class RecordService {
     return this.http.get<DuplicateRow[]>(`${environment.apiUrl}/records/duplicates/${id}`);
   }
 
+  resolveLink(link: string): Observable<ApartmentRecord> {
+    let submitComment = {"linkToResolve": link};
+    return this.http.post<ApartmentRecord>(`${environment.apiUrl}/link-resolver/`, submitComment);
+  }
+
+  save(apartmentRecord: ApartmentRecord): Observable<void> {
+    return this.http.post<void>(`${environment.apiUrl}/records/`, apartmentRecord);
+  }
+
+
 }

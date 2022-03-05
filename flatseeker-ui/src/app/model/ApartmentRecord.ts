@@ -48,4 +48,8 @@ export class ApartmentRecord {
     this.comment = comment;
     this.viewed = viewed;
   }
+
+  public static mock() {
+    return new ApartmentRecord("", "", "", 0, 0, 0, 0, false, AnimalsStatus.NOT_DEFINED, BathroomStatus.SINGLE, "", ApartmentType.FLAT, new Date(), "", LocationStatus.CLOSE, "", "", ProcessStatus.UNKNOWN, "", false);
+  }
 }

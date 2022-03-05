@@ -1,8 +1,10 @@
 package com.yakzhanov.flatseeker.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 import com.yakzhanov.flatseeker.model.ApartmentRecord;
 import com.yakzhanov.flatseeker.model.DuplicateRecord;
 import com.yakzhanov.flatseeker.model.ProcessStatus;
@@ -35,9 +37,12 @@ public class RecordServiceImpl implements RecordService {
     public Optional<ApartmentRecord> loadById(String recordId) {
         var recordOptional = recordRepository.findById(recordId);
         recordOptional.ifPresent(
-            ignore -> {
+            record -> {
                 recordRepository.updateViewedStatus(recordId);
-                eventRepository.save(RecordEvent.forViewedFirst(recordId));
+                if (!record.isViewed()) {
+                    record.setViewed(true);
+                    eventRepository.save(RecordEvent.forViewedFirst(recordId));
+                }
             }
         );
         return recordOptional;
@@ -58,6 +63,13 @@ public class RecordServiceImpl implements RecordService {
     @Override
     public Optional<List<RecordEvent>> loadRecordEvents(String recordId) {
         return Optional.of(eventRepository.findAllByApartmentRecordIdOrderByCreatedAtDesc(recordId));
+    }
+
+    @Override
+    public void saveNew(ApartmentRecord record) {
+        record.setId(UUID.randomUUID().toString());
+        record.setCreatedAt(new Date());
+        recordRepository.save(record);
     }
 
     @Override
