@@ -8,3 +8,16 @@
 .ant-layout-header {
   background-color: white;
 }
+
+.link-resolver-input {
+  width: 500px;
+}
+
+.link-resolve-img {
+  object-fit: contain;
+  width: 100%;
+}
+
+.highlighted {
+  font-weight: 600;
+}

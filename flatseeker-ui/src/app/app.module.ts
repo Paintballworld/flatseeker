@@ -34,6 +34,7 @@ import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzTagModule } from 'ng-zorro-antd/tag';
 
 registerLocaleData(en);
 
@@ -73,7 +74,8 @@ registerLocaleData(en);
     NzCollapseModule,
     NzTabsModule,
     NzEmptyModule,
-    NzModalModule
+    NzModalModule,
+    NzTagModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},

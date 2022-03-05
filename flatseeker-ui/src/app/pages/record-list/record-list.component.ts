@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit } from '@angular/core';
 import { RecordService } from "../../service/record.service";
 import { RecordRow } from "../../model/RecordRow";
 import { ApartmentRecord } from "../../model/ApartmentRecord";
@@ -16,13 +16,15 @@ import { ProcessStatusDict } from "../../model/dict/ProcessStatusDict";
 import { RecordEvent } from "../../model/RecordEvent";
 import { DuplicateRow } from "../../model/DuplicateRow";
 import { ProcessStatus } from 'src/app/model/ProcessStatus';
+import { NewRecordService } from "../../service/new-record.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: 'app-record-list',
   templateUrl: './record-list.component.html',
   styleUrls: ['./record-list.component.css']
 })
-export class RecordListComponent implements OnInit {
+export class RecordListComponent implements OnInit, OnDestroy {
 
   page: number = 1;
   records: RecordRow[] = [];
@@ -48,11 +50,14 @@ export class RecordListComponent implements OnInit {
   duplicateList: DuplicateRow[] = [];
 
   newCommentField: string = "";
+  // @ts-ignore
+  newRecordSubsription: Subscription;
 
   constructor(
     private recordService: RecordService,
     private message: NzMessageService,
-    private dictService: DictService
+    private dictService: DictService,
+    private newRecordService: NewRecordService
   ) {
   }
 
@@ -61,23 +66,25 @@ export class RecordListComponent implements OnInit {
     this.dictService.loadAnimalStatuses()
       .subscribe({
         next: list => this.animalStatuses = list
-      })
+      });
     this.dictService.loadApartmentTypes()
       .subscribe({
         next: list => this.apartmentTypes = list
-      })
+      });
     this.dictService.loadBathroomStatuses()
       .subscribe({
         next: list => this.bathroomStatuses = list
-      })
+      });
     this.dictService.loadLocationStatuses()
       .subscribe({
         next: list => this.locationStatuses = list
-      })
+      });
     this.dictService.loadProcessStatuses()
       .subscribe({
         next: list => this.processStatuses = list
-      })
+      });
+    this.newRecordSubsription = this.newRecordService.eventEmitter
+      .subscribe(record => this.records.unshift(RecordRow.of(record)));
   }
 
   log(e: any) {
@@ -182,5 +189,9 @@ export class RecordListComponent implements OnInit {
       .map(dict => dict.active)
       .pop();
     return active != undefined ? active : false;
+  }
+
+  ngOnDestroy(): void {
+    this.newRecordSubsription.unsubscribe();
   }
 }

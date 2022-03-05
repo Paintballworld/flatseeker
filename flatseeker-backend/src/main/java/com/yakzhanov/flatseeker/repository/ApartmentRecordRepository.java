@@ -16,6 +16,8 @@ public interface ApartmentRecordRepository extends JpaRepository<ApartmentRecord
 
     List<ApartmentRecord> findAllByPlatformNameOrderByInsertedAt(String platformName);
 
+    Optional<ApartmentRecord> findByLink(String linkToResolve);
+
     Optional<ApartmentRecord> findFirstByTitle(String title);
 
     @Query("select link from ApartmentRecord where platformName = :platformName order by viewed, insertedAt desc, title desc")

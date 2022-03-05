@@ -1,5 +1,6 @@
 import { ProcessStatus } from "./ProcessStatus";
 import { LocationStatus } from "./LocationStatus";
+import { ApartmentRecord } from "./ApartmentRecord";
 
 export class RecordRow {
   public id: string;
@@ -32,5 +33,9 @@ export class RecordRow {
     this.link = link;
     this.totalPrice = totalPrice;
     this.viewed = viewed;
+  }
+
+  static of(record: ApartmentRecord) {
+    return new RecordRow(record.id, record.title, record.rentPrice, record.feePrice, record.platformName, record.description, record.mainImageUrl, record.area, record.processStatus, record.locationStatus, record.createdAt, record.link, record.rentPrice + record.feePrice, record.viewed);
   }
 }

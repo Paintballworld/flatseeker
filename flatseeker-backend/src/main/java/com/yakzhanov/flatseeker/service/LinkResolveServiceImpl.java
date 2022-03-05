@@ -1,10 +1,9 @@
 package com.yakzhanov.flatseeker.service;
 
 import java.util.Optional;
-import java.util.UUID;
 import javax.validation.constraints.NotNull;
-import com.yakzhanov.flatseeker.model.ApartmentRecord;
 import com.yakzhanov.flatseeker.model.dto.LinkResolveRequest;
+import com.yakzhanov.flatseeker.model.dto.LinkResolveResponse;
 import com.yakzhanov.flatseeker.repository.ApartmentRecordRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,15 +17,13 @@ public class LinkResolveServiceImpl implements LinkResolveService {
     private final LinkResolver linkResolver;
     private final ApartmentRecordRepository apartmentRecordRepository;
 
-    @Override
-    public void save(ApartmentRecord record) {
-        log.info("Saving new resolved record");
-        record.setId(UUID.randomUUID().toString());
-        apartmentRecordRepository.save(record);
-    }
 
     @Override
-    public Optional<ApartmentRecord> tryToResolve(@NotNull LinkResolveRequest request) {
-        return Optional.of(linkResolver.resolve(request.getLinkToResolve()));
+    public Optional<LinkResolveResponse> tryToResolve(@NotNull LinkResolveRequest request) {
+        // TODO: 05.03.2022 Change to duplicate by title, rather than a link, beecause link might contain utm parameters, which are irrelevant and might change
+        return apartmentRecordRepository.findByLink(request.getLinkToResolve())
+          .map(LinkResolveResponse::ofExisting)
+          .or(() -> Optional.of(linkResolver.resolve(request.getLinkToResolve()))
+            .map(LinkResolveResponse::ofNew));
     }
 }

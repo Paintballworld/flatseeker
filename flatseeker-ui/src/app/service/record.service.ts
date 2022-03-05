@@ -6,6 +6,7 @@ import { Observable } from "rxjs";
 import { ApartmentRecord } from "../model/ApartmentRecord";
 import { RecordEvent } from "../model/RecordEvent";
 import { DuplicateRow } from "../model/DuplicateRow";
+import { LinkResolveResponse } from "../model/LinkResolveResponse";
 
 @Injectable({providedIn: 'root'})
 export class RecordService {
@@ -47,13 +48,13 @@ export class RecordService {
     return this.http.get<DuplicateRow[]>(`${environment.apiUrl}/records/duplicates/${id}`);
   }
 
-  resolveLink(link: string): Observable<ApartmentRecord> {
+  resolveLink(link: string): Observable<LinkResolveResponse> {
     let submitComment = {"linkToResolve": link};
-    return this.http.post<ApartmentRecord>(`${environment.apiUrl}/link-resolver/`, submitComment);
+    return this.http.post<LinkResolveResponse>(`${environment.apiUrl}/link-resolver/`, submitComment);
   }
 
-  save(apartmentRecord: ApartmentRecord): Observable<void> {
-    return this.http.post<void>(`${environment.apiUrl}/records/`, apartmentRecord);
+  save(apartmentRecord: ApartmentRecord): Observable<ApartmentRecord> {
+    return this.http.post<ApartmentRecord>(`${environment.apiUrl}/records/`, apartmentRecord);
   }
 
 

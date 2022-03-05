@@ -12,7 +12,8 @@
         <a (click)="logout()">Выход</a>
       </li>
       <li nz-menu-item>
-        <input type="text" nz-input placeholder="input search text" (keyup.enter)="resolveLink()" [(ngModel)]="linkResolveContent"/>
+        <input type="text" class="link-resolver-input" nz-input placeholder="Скопируйте ссылку на объявление"
+               (keyup.enter)="resolveLink()" [(ngModel)]="linkResolveContent" [disabled]="requestProcessing"/>
       </li>
     </ul>
   </nz-header>
@@ -22,26 +23,27 @@
     </div>
   </nz-content>
 </nz-layout>
-<nz-modal [(nzVisible)]="showModal" nzTitle="The first Modal" (nzOnCancel)="cancelLink()" (nzOnOk)="saveLink()">
+<nz-modal [(nzVisible)]="showModal" nzTitle="The first Modal" (nzOnCancel)="cancelLink()" (nzOnOk)="saveLink()"
+          [nzWidth]="1000">
   <ng-container *nzModalContent>
-    <p>Title: {{ resolvedRecord.title }}</p>
-    <p>Title: {{ resolvedRecord.title }}</p>
-    <p>Title: {{ resolvedRecord.description }}</p>
-    <p>Title: {{ resolvedRecord.rentPrice }}</p>
-    <p>Title: {{ resolvedRecord.feePrice }}</p>
-    <p>Title: {{ resolvedRecord.deposit }}</p>
-    <p>Title: {{ resolvedRecord.area }}</p>
-    <p>Title: {{ resolvedRecord.conditioner }}</p>
-    <p>Title: {{ resolvedRecord.animalsStatus }}</p>
-    <p>Title: {{ resolvedRecord.bathroomStatus }}</p>
-    <p>Title: {{ resolvedRecord.location }}</p>
-    <p>Title: {{ resolvedRecord.type }}</p>
-    <p>Title: {{ resolvedRecord.createdAt }}</p>
-    <p>Title: {{ resolvedRecord.mainImageUrl }}</p>
-    <p>Title: {{ resolvedRecord.locationStatus }}</p>
-    <p>Title: {{ resolvedRecord.link }}</p>
-    <p>Title: {{ resolvedRecord.platformName }}</p>
-    <p>Title: {{ resolvedRecord.processStatus }}</p>
-    <p>Title: {{ resolvedRecord.comment }}</p>
+
+    <nz-tag nzColor="Red" *ngIf="resolveResponse.alreadyExists">Дубликат</nz-tag>
+
+    <a [href]="resolveResponse.record.link"><h1>{{ resolveResponse.record.title }}</h1></a>
+    <br/><img class="link-resolve-img" [src]="resolveResponse.record.mainImageUrl" [alt]="resolveResponse.record.link"/>
+    <p>{{ resolveResponse.record.description }}</p>
+    <br/>Арендв: <span class="highlighted">{{ resolveResponse.record.rentPrice }}</span>
+    Сбор: <span class="highlighted">{{ resolveResponse.record.feePrice }}</span>
+    <br/>Залог: <span class="highlighted">{{ resolveResponse.record.deposit }}</span>
+    <br/>Площадь: <span class="highlighted">{{ resolveResponse.record.area }}</span>
+    <br/>кондиционер: <span class="highlighted">{{ resolveResponse.record.conditioner ? "имеется" : "нет" }}</span>
+    <br/>Животные: <span class="highlighted">{{ resolveResponse.record.animalsStatus }}</span>
+    <br/>Ванная: <span class="highlighted">{{ resolveResponse.record.bathroomStatus }}</span>
+    <br/>Расположение: <span class="highlighted">{{ resolveResponse.record.location }}</span>
+    <br/>Тип: <span class="highlighted">{{ resolveResponse.record.type }}</span>
+    <br/>Дата объявления: <span class="highlighted">{{ resolveResponse.record.createdAt }}</span>
+    <br/>locationStatus: <span class="highlighted">{{ resolveResponse.record.locationStatus }}</span>
+    <br/>platformName: <span class="highlighted">{{ resolveResponse.record.platformName }}</span>
+    <br/>processStatus: <span class="highlighted">{{ resolveResponse.record.processStatus }}</span>
   </ng-container>
 </nz-modal>

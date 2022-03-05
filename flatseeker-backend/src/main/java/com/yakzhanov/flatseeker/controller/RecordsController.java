@@ -39,8 +39,8 @@ public class RecordsController {
     }
 
     @PostMapping("/")
-    public void saveNewRecord(@RequestBody @Valid ApartmentRecord record) {
-        recordService.saveNew(record);
+    public ResponseEntity<ApartmentRecord> saveNewRecord(@RequestBody @Valid ApartmentRecord record) {
+        return ResponseEntity.of(recordService.saveNew(record));
     }
 
     @PutMapping("/")

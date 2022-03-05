@@ -23,10 +23,9 @@ export class ApartmentRecord {
   public link: string;
   public platformName: string;
   public processStatus: ProcessStatus;
-  public comment: string;
   public viewed: boolean;
 
-  constructor(id: string, title: string, description: string, rentPrice: number, feePrice: number, deposit: number, area: number, conditioner: Boolean, animalsStatus: AnimalsStatus, bathroomStatus: BathroomStatus, location: string, type: ApartmentType, createdAt: Date, mainImageUrl: string, locationStatus: LocationStatus, link: string, platformName: string, processStatus: ProcessStatus, comment: string, viewed: boolean) {
+  constructor(id: string, title: string, description: string, rentPrice: number, feePrice: number, deposit: number, area: number, conditioner: Boolean, animalsStatus: AnimalsStatus, bathroomStatus: BathroomStatus, location: string, type: ApartmentType, createdAt: Date, mainImageUrl: string, locationStatus: LocationStatus, link: string, platformName: string, processStatus: ProcessStatus, viewed: boolean) {
     this.id = id;
     this.title = title;
     this.description = description;
@@ -45,11 +44,10 @@ export class ApartmentRecord {
     this.link = link;
     this.platformName = platformName;
     this.processStatus = processStatus;
-    this.comment = comment;
     this.viewed = viewed;
   }
 
   public static mock() {
-    return new ApartmentRecord("", "", "", 0, 0, 0, 0, false, AnimalsStatus.NOT_DEFINED, BathroomStatus.SINGLE, "", ApartmentType.FLAT, new Date(), "", LocationStatus.CLOSE, "", "", ProcessStatus.UNKNOWN, "", false);
+    return new ApartmentRecord("", "", "", 0, 0, 0, 0, false, AnimalsStatus.NOT_DEFINED, BathroomStatus.SINGLE, "", ApartmentType.FLAT, new Date(), "", LocationStatus.CLOSE, "", "", ProcessStatus.UNKNOWN, false);
   }
 }

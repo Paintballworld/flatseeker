@@ -66,10 +66,13 @@ public class RecordServiceImpl implements RecordService {
     }
 
     @Override
-    public void saveNew(ApartmentRecord record) {
-        record.setId(UUID.randomUUID().toString());
-        record.setCreatedAt(new Date());
-        recordRepository.save(record);
+    public Optional<ApartmentRecord> saveNew(ApartmentRecord record) {
+
+        if (record.getId() == null) {
+            record.setId(UUID.randomUUID().toString());
+        }
+
+        return Optional.of(recordRepository.save(record));
     }
 
     @Override
