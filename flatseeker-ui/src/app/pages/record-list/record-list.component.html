@@ -178,7 +178,7 @@
         <nz-list nzBordered nzSize="small">
           <nz-list-header >Объявления с идентичным наименованием:</nz-list-header>
           <nz-list-item *ngFor="let duplicate of duplicateList">
-            <a [href]="duplicate.link">
+            <a [href]="duplicate.link" target="_blank">
               <span class="duplicate-row-platform" >{{ duplicate.platformName}}</span>
               {{ duplicate.title }}
               <span class="duplicate-row-date">{{ duplicate.createdAt | date:'longDate' }}</span>
