@@ -44,6 +44,8 @@ public interface AptPlatform {
 
     String extractTitle(Document document);
 
+    boolean isOutdated(Document document);
+
     String name();
 
     int readTimeoutMillis();

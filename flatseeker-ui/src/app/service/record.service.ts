@@ -57,5 +57,7 @@ export class RecordService {
     return this.http.post<ApartmentRecord>(`${environment.apiUrl}/records/`, apartmentRecord);
   }
 
-
+  remove(recordId: string): Observable<any> {
+    return this.http.delete<any>(`${environment.apiUrl}/records/${recordId}`);
+  }
 }

@@ -42,6 +42,12 @@
       <nz-list-item-action>
         {{ getStatusDictValue(item.processStatus)}}
       </nz-list-item-action>
+
+      <nz-list-item-action>
+        <button nz-button nzDanger nzSize="small" nzShape="circle" (click)="remove(item.id)">
+          <i nz-icon nzType="delete" nzTheme="outline"></i>
+        </button>
+      </nz-list-item-action>
     </ul>
     <nz-list-item-extra>
       <nz-badge [nzDot]="!item.viewed">

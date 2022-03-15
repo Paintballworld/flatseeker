@@ -12,6 +12,7 @@ import com.yakzhanov.flatseeker.service.RecordService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,6 +42,11 @@ public class RecordsController {
     @PostMapping("/")
     public ResponseEntity<ApartmentRecord> saveNewRecord(@RequestBody @Valid ApartmentRecord record) {
         return ResponseEntity.of(recordService.saveNew(record));
+    }
+
+    @DeleteMapping("/{recordId}")
+    public void remove(@PathVariable String recordId) {
+        recordService.markAsRemoved(recordId);
     }
 
     @PutMapping("/")

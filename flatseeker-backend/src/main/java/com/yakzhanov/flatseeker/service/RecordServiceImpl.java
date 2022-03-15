@@ -1,6 +1,5 @@
 package com.yakzhanov.flatseeker.service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -30,7 +29,8 @@ public class RecordServiceImpl implements RecordService {
 
     @Override
     public Optional<List<ApartmentRecord>> loadAll() {
-        return Optional.of(recordRepository.findAll());
+        return Optional.of(recordRepository.loadNotRemoved());
+        // TODO: 15.03.2022 map to row
     }
 
     @Override
@@ -52,7 +52,7 @@ public class RecordServiceImpl implements RecordService {
     public Optional<List<ApartmentRecord>> loadByPlatformName(String platformName) {
         return Optional.ofNullable(aptPlatformMap.get(platformName)) // checking if given platform exists
           .map(AptPlatform::name)
-          .map(recordRepository::findAllByPlatformNameOrderByInsertedAt);
+          .map(recordRepository::loadAllForPlatform);
     }
 
     @Override
@@ -63,6 +63,11 @@ public class RecordServiceImpl implements RecordService {
     @Override
     public Optional<List<RecordEvent>> loadRecordEvents(String recordId) {
         return Optional.of(eventRepository.findAllByApartmentRecordIdOrderByCreatedAtDesc(recordId));
+    }
+
+    @Override
+    public void markAsRemoved(String recordId) {
+        recordRepository.updateRemoveFlag(recordId);
     }
 
     @Override

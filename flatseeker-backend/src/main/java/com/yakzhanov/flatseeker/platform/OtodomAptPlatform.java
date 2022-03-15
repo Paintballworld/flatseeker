@@ -172,13 +172,20 @@ public class OtodomAptPlatform implements AptPlatform {
     }
 
     @Override
+    public boolean isOutdated(Document document) {
+        return document.select("div[data-cy='redirectedFromInactiveAd']").stream()
+          .findAny()
+          .isPresent();
+    }
+
+    @Override
     public String name() {
         return OTODOM;
     }
 
     @Override
     public int readTimeoutMillis() {
-        return 5000;
+        return 100_000;
     }
 
     @SneakyThrows

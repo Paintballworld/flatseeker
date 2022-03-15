@@ -14,7 +14,11 @@ import org.springframework.stereotype.Repository;
 @Transactional
 public interface ApartmentRecordRepository extends JpaRepository<ApartmentRecord, String> {
 
-    List<ApartmentRecord> findAllByPlatformNameOrderByInsertedAt(String platformName);
+    @Query("select r from ApartmentRecord r where r.platformName = :platformName and r.removed = false")
+    List<ApartmentRecord> loadAllForPlatform(String platformName);
+
+    @Query("select r from ApartmentRecord r where r.removed = false order by viewed, insertedAt desc, title desc")
+    List<ApartmentRecord> loadNotRemoved();
 
     Optional<ApartmentRecord> findByLink(String linkToResolve);
 
@@ -28,7 +32,11 @@ public interface ApartmentRecordRepository extends JpaRepository<ApartmentRecord
     void updateProcessStatus(String id, ProcessStatus newStatus);
 
     @Modifying(flushAutomatically = true)
-    @Query("update ApartmentRecord  set viewed = true where id = :id")
+    @Query("update ApartmentRecord set removed = true where id = :id")
+    void updateRemoveFlag(String id);
+
+    @Modifying(flushAutomatically = true)
+    @Query("update ApartmentRecord set viewed = true where id = :id")
     void updateViewedStatus(String id);
 
 }

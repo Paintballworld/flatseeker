@@ -18,6 +18,7 @@ import com.yakzhanov.flatseeker.model.BathroomStatus;
 import com.yakzhanov.flatseeker.model.LinkData;
 import com.yakzhanov.flatseeker.utils.AppUtils;
 import lombok.SneakyThrows;
+import org.hibernate.cfg.NotYetImplementedException;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -133,6 +134,11 @@ public class GumtreeAptPlatform implements AptPlatform {
     @Override
     public String extractTitle(Document document) {
         return readStringValue(document, "div#wrapper span.myAdTitle");
+    }
+
+    @Override
+    public boolean isOutdated(Document document) {
+        throw new NotYetImplementedException("Method 'isOutdated' for Gumtree platform is not implemented");
     }
 
     @Override

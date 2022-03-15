@@ -48,7 +48,6 @@ public class ApartmentRecord {
 
     private String mainImageUrl;
 
-
     // Service
     @Enumerated(EnumType.STRING)
     private LocationStatus locationStatus;
@@ -58,6 +57,7 @@ public class ApartmentRecord {
     private ProcessStatus processStatus;
     private Date insertedAt;
     private boolean viewed;
+    private boolean removed;
 
 }
 

@@ -194,4 +194,15 @@ export class RecordListComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.newRecordSubsription.unsubscribe();
   }
+
+  remove(id: string): void {
+    this.recordService.remove(id)
+      .subscribe({
+        next: ignore => {
+          this.message.info("Запись удалена");
+          this.refresh()
+        },
+        error: message => this.message.error("Не возможно удалить запись <br/>" + message)
+      });
+  }
 }
