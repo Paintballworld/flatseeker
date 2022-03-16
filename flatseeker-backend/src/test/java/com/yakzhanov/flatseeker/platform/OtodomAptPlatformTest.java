@@ -15,7 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class OtodomAptPlatformTest {
 
-    public static final String TEST_PAGE = "https://www.otodom.pl//pl/oferta/mieszkanie-4pok-86m2-z-widokiem-na-park-reduta-ID4eMgr";
+    private static final String TEST_PAGE = "https://www.otodom.pl//pl/oferta/mieszkanie-4pok-86m2-z-widokiem-na-park-reduta-ID4eMgr";
 
     @Autowired
     @Qualifier(OtodomAptPlatform.OTODOM)

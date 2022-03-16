@@ -145,7 +145,9 @@ public class GumtreeAptPlatform implements AptPlatform {
 
     @Override
     public boolean isOutdated(Document document) {
-        throw new NotYetImplementedException("Method 'isOutdated' for Gumtree platform is not implemented");
+        return document.select("div.usr-interactions").stream()
+          .findAny()
+          .isEmpty();
     }
 
     @Override

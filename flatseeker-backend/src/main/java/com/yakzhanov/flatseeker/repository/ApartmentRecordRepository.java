@@ -17,7 +17,7 @@ public interface ApartmentRecordRepository extends JpaRepository<ApartmentRecord
     @Query("select r from ApartmentRecord r where r.platformName = :platformName and r.removed = false")
     List<ApartmentRecord> loadAllForPlatform(String platformName);
 
-    @Query("select r from ApartmentRecord r where r.removed = false order by viewed, insertedAt desc, title desc")
+    @Query("select r from ApartmentRecord r where r.removed = false and r.processStatus.key <> 'OUTDATED' order by r.viewed, r.insertedAt desc, r.title desc")
     List<ApartmentRecord> loadNotRemoved();
 
     Optional<ApartmentRecord> findByLink(String linkToResolve);
@@ -34,6 +34,10 @@ public interface ApartmentRecordRepository extends JpaRepository<ApartmentRecord
     @Modifying(flushAutomatically = true)
     @Query("update ApartmentRecord set removed = true where id = :id")
     void updateRemoveFlag(String id);
+
+    @Modifying(flushAutomatically = true)
+    @Query("update ApartmentRecord set processStatus = :processStatusId where id = :id")
+    void updateStatus(String id, Long processStatusId);
 
     @Modifying(flushAutomatically = true)
     @Query("update ApartmentRecord set viewed = true where id = :id")

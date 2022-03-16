@@ -13,7 +13,7 @@ public class RevokeOutdatedRecordsScheduler {
 
     private final RecordsCleaningService recordsCleaningService;
 
-    @Scheduled(cron = "0 0 6,19 * * *")
+    @Scheduled(cron = "0 0 23 * * *")
     public void loadOneNewPageAndSave() {
         var removedCount = recordsCleaningService.removeOutdated();
         if (removedCount > 0) {
