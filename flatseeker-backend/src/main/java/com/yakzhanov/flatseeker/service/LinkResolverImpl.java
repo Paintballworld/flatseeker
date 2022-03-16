@@ -1,14 +1,13 @@
 package com.yakzhanov.flatseeker.service;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
 import java.util.Optional;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import com.yakzhanov.flatseeker.exception.UnknownPlatformException;
 import com.yakzhanov.flatseeker.model.ApartmentRecord;
+import com.yakzhanov.flatseeker.model.dict.ProcessStatus;
 import com.yakzhanov.flatseeker.platform.AptPlatform;
 import com.yakzhanov.flatseeker.utils.AppUtils;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +23,7 @@ import org.springframework.stereotype.Service;
 public class LinkResolverImpl implements LinkResolver {
 
     private final Map<String, AptPlatform> platformMap;
+    private final DictService dictService;
     private Map<String, String> urlPlatformMap;
 
     @PostConstruct
@@ -42,7 +42,7 @@ public class LinkResolverImpl implements LinkResolver {
         return Optional.ofNullable(extractBaseUrl(link))
           .map(urlPlatformMap::get)
           .map(platformMap::get)
-          .map(platform -> AppUtils.parseRecord(readAsDocument(url, platform), platform, url))
+          .map(platform -> AppUtils.parseRecord(readAsDocument(url, platform), platform, url, dictService.defaultValue(ProcessStatus.class)))
           .orElseThrow(UnknownPlatformException::new);
     }
 

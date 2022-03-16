@@ -29,6 +29,10 @@
   border-radius: 6px;
 }
 
+.list-item-record-inactive {
+  opacity: 0.5;
+}
+
 .list-item-record-new {
   background-color: palegreen;
 }

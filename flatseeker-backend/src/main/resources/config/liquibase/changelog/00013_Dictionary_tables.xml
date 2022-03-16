@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+
+  <changeSet id="013-01" author="yakzhanov">
+    <createSequence sequenceName="dict_sequence_generator" startValue="100000" incrementBy="5"/>
+  </changeSet>
+
+  <changeSet id="013-02" author="yakzhanov">
+    <createTable tableName="animal_status">
+      <column name="id" type="BIGINT" defaultValue="nextVal('dict_sequence_generator')">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="title" type="VARCHAR(100)"/>
+      <column name="key" type="VARCHAR(100)"/>
+    </createTable>
+  </changeSet>
+
+  <changeSet id="013-03" author="yakzhanov">
+    <createTable tableName="apartment_type">
+      <column name="id" type="BIGINT" defaultValue="nextVal('dict_sequence_generator')">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="title" type="VARCHAR(100)"/>
+      <column name="key" type="VARCHAR(100)"/>
+    </createTable>
+  </changeSet>
+
+  <changeSet id="013-04" author="bathroom_status">
+    <createTable tableName="bathroom_status">
+      <column name="id" type="BIGINT" defaultValue="nextVal('dict_sequence_generator')">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="title" type="VARCHAR(100)"/>
+      <column name="key" type="VARCHAR(100)"/>
+    </createTable>
+  </changeSet>
+
+  <changeSet id="013-05" author="yakzhanov">
+    <createTable tableName="location_status">
+      <column name="id" type="BIGINT" defaultValue="nextVal('dict_sequence_generator')">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="title" type="VARCHAR(100)"/>
+      <column name="key" type="VARCHAR(100)"/>
+    </createTable>
+  </changeSet>
+
+  <changeSet id="013-06" author="yakzhanov">
+    <createTable tableName="process_status">
+      <column name="id" type="BIGINT" defaultValue="nextVal('dict_sequence_generator')">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="title" type="VARCHAR(100)"/>
+      <column name="key" type="VARCHAR(100)"/>
+      <column name="color" type="VARCHAR(100)"/>
+      <column name="active" type="boolean"/>
+    </createTable>
+  </changeSet>
+
+  <changeSet id="013-07" author="yakzhanoc">
+    <dropColumn tableName="apartment_record" columnName="animals_status"/>
+    <dropColumn tableName="apartment_record" columnName="type"/>
+    <dropColumn tableName="apartment_record" columnName="bathroom_status"/>
+    <dropColumn tableName="apartment_record" columnName="location_status"/>
+    <dropColumn tableName="apartment_record" columnName="process_status"/>
+
+    <addColumn tableName="apartment_record">
+      <column name="animal_status" type="bigint"/>
+      <column name="apartment_type" type="bigint"/>
+      <column name="bathroom_status" type="bigint"/>
+      <column name="location_status" type="bigint"/>
+      <column name="process_status" type="bigint"/>
+    </addColumn>
+
+    <addForeignKeyConstraint baseTableName="apartment_record"
+                             baseColumnNames="animal_status"
+                             constraintName="apartment_record_animal_status_fk"
+                             referencedTableName="animal_status"
+                             referencedColumnNames="id"/>
+    <addForeignKeyConstraint baseTableName="apartment_record"
+                             baseColumnNames="apartment_type"
+                             constraintName="apartment_record_apartment_type_fk"
+                             referencedTableName="apartment_type"
+                             referencedColumnNames="id"/>
+    <addForeignKeyConstraint baseTableName="apartment_record"
+                             baseColumnNames="bathroom_status"
+                             constraintName="apartment_record_bathroom_status_fk"
+                             referencedTableName="bathroom_status"
+                             referencedColumnNames="id"/>
+    <addForeignKeyConstraint baseTableName="apartment_record"
+                             baseColumnNames="location_status"
+                             constraintName="apartment_record_location_status_fk"
+                             referencedTableName="location_status"
+                             referencedColumnNames="id"/>
+    <addForeignKeyConstraint baseTableName="apartment_record"
+                             baseColumnNames="process_status"
+                             constraintName="apartment_record_process_status_fk"
+                             referencedTableName="process_status"
+                             referencedColumnNames="id"/>
+
+  </changeSet>
+
+  <changeSet id="013-08" author="yakzhanov">
+    <loadData tableName="animal_status" file="config/liquibase/data/animal_status.csv" usePreparedStatements="true"/>
+    <loadData tableName="apartment_type" file="config/liquibase/data/apartment_type.csv" usePreparedStatements="true"/>
+    <loadData tableName="bathroom_status" file="config/liquibase/data/bathroom_status.csv" usePreparedStatements="true"/>
+    <loadData tableName="location_status" file="config/liquibase/data/location_status.csv" usePreparedStatements="true"/>
+    <loadData tableName="process_status" file="config/liquibase/data/process_status.csv" usePreparedStatements="true"/>
+  </changeSet>
+
+
+</databaseChangeLog>

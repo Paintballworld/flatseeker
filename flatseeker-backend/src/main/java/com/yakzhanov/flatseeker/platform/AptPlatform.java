@@ -4,9 +4,9 @@ import java.net.URL;
 import java.util.Date;
 import java.util.List;
 import com.yakzhanov.flatseeker.conf.AppParams;
-import com.yakzhanov.flatseeker.model.AnimalsStatus;
-import com.yakzhanov.flatseeker.model.ApartmentType;
-import com.yakzhanov.flatseeker.model.BathroomStatus;
+import com.yakzhanov.flatseeker.model.dict.AnimalStatus;
+import com.yakzhanov.flatseeker.model.dict.ApartmentType;
+import com.yakzhanov.flatseeker.model.dict.BathroomStatus;
 import com.yakzhanov.flatseeker.model.LinkData;
 import org.jsoup.nodes.Document;
 
@@ -16,7 +16,7 @@ public interface AptPlatform {
 
     boolean canSendRequest();
 
-    AnimalsStatus extractAnimalStatus(Document document);
+    AnimalStatus extractAnimalStatus(Document document);
 
     ApartmentType extractApartmentType(Document document);
 

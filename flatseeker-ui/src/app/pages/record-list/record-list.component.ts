@@ -1,21 +1,16 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { RecordService } from "../../service/record.service";
 import { RecordRow } from "../../model/RecordRow";
 import { ApartmentRecord } from "../../model/ApartmentRecord";
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { AnimalsStatus } from "../../model/AnimalsStatus";
-import { BathroomStatus } from "../../model/BathroomStatus";
-import { LocationStatus } from "../../model/LocationStatus";
-import { ApartmentType } from "../../model/ApartmentType";
 import { DictService } from "../../service/dict.service";
-import { AnimalStatusDict } from "../../model/dict/AnimalStatusDict";
-import { ApartmentTypeDict } from "../../model/dict/ApartmentTypeDict";
-import { BathroomStatusDict } from "../../model/dict/BathroomStatusDict";
-import { LocationStatusDict } from "../../model/dict/LocationStatusDict";
-import { ProcessStatusDict } from "../../model/dict/ProcessStatusDict";
+import { AnimalStatus } from "../../model/dict/AnimalStatus";
+import { ApartmentType } from "../../model/dict/ApartmentType";
+import { BathroomStatus } from "../../model/dict/BathroomStatus";
+import { LocationStatus } from "../../model/dict/LocationStatus";
+import { ProcessStatus } from "../../model/dict/ProcessStatus";
 import { RecordEvent } from "../../model/RecordEvent";
 import { DuplicateRow } from "../../model/DuplicateRow";
-import { ProcessStatus } from 'src/app/model/ProcessStatus';
 import { NewRecordService } from "../../service/new-record.service";
 import { Subscription } from "rxjs";
 
@@ -31,27 +26,22 @@ export class RecordListComponent implements OnInit, OnDestroy {
   loading: boolean = false;
   selectedRecord: ApartmentRecord = ApartmentRecord.mock();
   drawerOpen: boolean = false;
-  AnimalsStatus = AnimalsStatus;
-  BathroomStatus = BathroomStatus;
-  ApartmentType = ApartmentType;
-  LocationStatus = LocationStatus;
-  ProcessStatus = ProcessStatus;
 
   formatterZloty = (value: number): string => `${value ? value : 0} zł`;
   parserZloty = (value: string): string => value.replace(' zł', '');
 
-  animalStatuses: AnimalStatusDict[] = [];
-  apartmentTypes: ApartmentTypeDict[] = [];
-  bathroomStatuses: BathroomStatusDict[] = [];
-  locationStatuses: LocationStatusDict[] = [];
-  processStatuses: ProcessStatusDict[] = [];
+  animalStatuses: AnimalStatus[] = [];
+  apartmentTypes: ApartmentType[] = [];
+  bathroomStatuses: BathroomStatus[] = [];
+  locationStatuses: LocationStatus[] = [];
+  processStatuses: ProcessStatus[] = [];
 
   selectedRecordEvents: RecordEvent[] = [];
   duplicateList: DuplicateRow[] = [];
 
   newCommentField: string = "";
   // @ts-ignore
-  newRecordSubsription: Subscription;
+  newRecordSubscription: Subscription;
 
   constructor(
     private recordService: RecordService,
@@ -83,7 +73,7 @@ export class RecordListComponent implements OnInit, OnDestroy {
       .subscribe({
         next: list => this.processStatuses = list
       });
-    this.newRecordSubsription = this.newRecordService.eventEmitter
+    this.newRecordSubscription = this.newRecordService.eventEmitter
       .subscribe(record => this.records.unshift(RecordRow.of(record)));
   }
 
@@ -166,11 +156,11 @@ export class RecordListComponent implements OnInit, OnDestroy {
       });
   }
 
-  updateProcessStatus(record: RecordRow, newStatus: string): void {
-    console.log("Updating status", record.id, newStatus);
-    this.recordService.updateProcessStatus(record.id, newStatus)
+  updateProcessStatus(record: RecordRow, newStatus: ProcessStatus): void {
+    console.log("Updating status", record.id, newStatus.key);
+    this.recordService.updateProcessStatus(record.id, newStatus.key)
       .subscribe({
-        next: ignore => this.refresh()
+        next: ignore => record.processStatus = newStatus
       })
   }
 
@@ -178,8 +168,7 @@ export class RecordListComponent implements OnInit, OnDestroy {
     return JSON.stringify(enumValue);
   }
 
-  areEqual(enumValue: ProcessStatus, enumIterable: any):
-    boolean {
+  areEqual(enumValue: ProcessStatus, enumIterable: any): boolean {
     return JSON.stringify(enumValue) === JSON.stringify(enumIterable);
   }
 
@@ -192,7 +181,7 @@ export class RecordListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.newRecordSubsription.unsubscribe();
+    this.newRecordSubscription.unsubscribe();
   }
 
   remove(id: string): void {

@@ -4,18 +4,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import com.yakzhanov.flatseeker.exception.ProcessStatusNotFoundException;
 import com.yakzhanov.flatseeker.model.ApartmentRecord;
 import com.yakzhanov.flatseeker.model.DuplicateRecord;
-import com.yakzhanov.flatseeker.model.ProcessStatus;
 import com.yakzhanov.flatseeker.model.RecordEvent;
+import com.yakzhanov.flatseeker.model.dict.ProcessStatus;
 import com.yakzhanov.flatseeker.model.dto.SubmitCommentRequest;
 import com.yakzhanov.flatseeker.platform.AptPlatform;
 import com.yakzhanov.flatseeker.repository.ApartmentRecordRepository;
 import com.yakzhanov.flatseeker.repository.DuplicateRecordRepository;
 import com.yakzhanov.flatseeker.repository.RecordEventRepository;
+import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 
 @Slf4j
 @Service
@@ -26,6 +29,7 @@ public class RecordServiceImpl implements RecordService {
     private final RecordEventRepository eventRepository;
     private final DuplicateRecordRepository duplicateRecordRepository;
     private final Map<String, AptPlatform> aptPlatformMap;
+    private final DictService dictService;
 
     @Override
     public Optional<List<ApartmentRecord>> loadAll() {
@@ -92,9 +96,13 @@ public class RecordServiceImpl implements RecordService {
     }
 
     @Override
-    public void updateStatus(String id, ProcessStatus newStatus) {
+    public void updateStatus(String id, String newStatusKey) {
+        var newStatus = dictService.getForKey(ProcessStatus.class, newStatusKey);
+        if (newStatus == null) {
+            throw new ProcessStatusNotFoundException();
+        }
         recordRepository.updateProcessStatus(id, newStatus);
-        eventRepository.save(RecordEvent.forNewStatus(id, newStatus));
+        eventRepository.save(RecordEvent.forNewStatus(id, newStatus.getTitle()));
     }
 
 }

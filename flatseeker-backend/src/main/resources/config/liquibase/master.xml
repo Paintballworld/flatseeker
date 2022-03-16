@@ -29,5 +29,7 @@
 
   <include file="config/liquibase/changelog/00011_ApartmentRecord_read.xml" relativeToChangelogFile="false"/>
   <include file="config/liquibase/changelog/00012_ApartmentRecord_removed.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/00013_Dictionary_tables.xml" relativeToChangelogFile="false"/>
+  <include file="config/liquibase/changelog/00014_Colmn_names_renamed.xml" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>

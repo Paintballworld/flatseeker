@@ -1,7 +1,7 @@
 package com.yakzhanov.flatseeker.model.dto;
 
 import javax.validation.constraints.NotNull;
-import com.yakzhanov.flatseeker.model.ProcessStatus;
+import com.yakzhanov.flatseeker.model.dict.ProcessStatus;
 import lombok.Data;
 import org.springframework.validation.annotation.Validated;
 
@@ -13,5 +13,5 @@ public class UpdateStatusRequest {
     private String id;
 
     @NotNull
-    private ProcessStatus newStatus;
+    private String newStatus;
 }

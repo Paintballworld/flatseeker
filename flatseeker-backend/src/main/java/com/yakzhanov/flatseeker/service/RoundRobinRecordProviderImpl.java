@@ -16,18 +16,21 @@ import com.yakzhanov.flatseeker.conf.AppParams;
 import com.yakzhanov.flatseeker.conf.Constants;
 import com.yakzhanov.flatseeker.model.ApartmentRecord;
 import com.yakzhanov.flatseeker.model.LinkData;
+import com.yakzhanov.flatseeker.model.dict.ProcessStatus;
 import com.yakzhanov.flatseeker.platform.AptPlatform;
 import com.yakzhanov.flatseeker.repository.ApartmentRecordRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.springframework.context.annotation.Primary;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
-@Service
-@Primary
 @Slf4j
+@Service
+@RequiredArgsConstructor
 public class RoundRobinRecordProviderImpl implements RecordProvider {
 
     private final Map<AptPlatform, AtomicInteger> nextPageForPlatformMap = new ConcurrentHashMap<>();
@@ -35,12 +38,10 @@ public class RoundRobinRecordProviderImpl implements RecordProvider {
     private final ConcurrentLinkedDeque<AptPlatform> platformsRoundRobinQueue = new ConcurrentLinkedDeque<>();
     private final AppParams appParams;
     private final ApartmentRecordRepository apartmentRecordRepository;
+    private final DictService dictService;
 
-    public RoundRobinRecordProviderImpl(List<AptPlatform> aptPlatforms,
-                                        AppParams appParams,
-                                        ApartmentRecordRepository apartmentRecordRepository) {
-        this.appParams = appParams;
-        this.apartmentRecordRepository = apartmentRecordRepository;
+    @Autowired
+    private void fillPlatformQueue(List<AptPlatform> aptPlatforms) {
         platformsRoundRobinQueue.addAll(aptPlatforms);
     }
 
@@ -130,7 +131,7 @@ public class RoundRobinRecordProviderImpl implements RecordProvider {
         }
         platform.updateRequestTime();
         var document = Jsoup.parse(nextAptPageUrl, platform.readTimeoutMillis());
-        return parseRecord(document, platform, nextAptPageUrl);
+        return parseRecord(document, platform, nextAptPageUrl, dictService.defaultValue(ProcessStatus.class));
     }
 
     @SneakyThrows

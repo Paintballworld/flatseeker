@@ -2,20 +2,20 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../environments/environment";
 import { Observable } from "rxjs";
-import { ProcessStatusDict } from "../model/dict/ProcessStatusDict";
-import { LocationStatusDict } from "../model/dict/LocationStatusDict";
-import { BathroomStatusDict } from "../model/dict/BathroomStatusDict";
-import { ApartmentTypeDict } from "../model/dict/ApartmentTypeDict";
-import { AnimalStatusDict } from "../model/dict/AnimalStatusDict";
+import { ProcessStatus } from "../model/dict/ProcessStatus";
+import { LocationStatus } from "../model/dict/LocationStatus";
+import { BathroomStatus } from "../model/dict/BathroomStatus";
+import { ApartmentType } from "../model/dict/ApartmentType";
+import { AnimalStatus } from "../model/dict/AnimalStatus";
 
 @Injectable({providedIn: 'root'})
 export class DictService {
 
-  protected animalStatuses: AnimalStatusDict[] = [];
-  protected apartmentTypes: ApartmentTypeDict[] = [];
-  protected bathroomStatuses: BathroomStatusDict[] = [];
-  protected locationStatuses: LocationStatusDict[] = [];
-  protected processStatuses: ProcessStatusDict[] = [];
+  protected animalStatuses: AnimalStatus[] = [];
+  protected apartmentTypes: ApartmentType[] = [];
+  protected bathroomStatuses: BathroomStatus[] = [];
+  protected locationStatuses: LocationStatus[] = [];
+  protected processStatuses: ProcessStatus[] = [];
 
   constructor(private http: HttpClient) {
     this.loadAnimalStatuses()
@@ -40,24 +40,24 @@ export class DictService {
       });
   }
 
-  loadAnimalStatuses(): Observable<AnimalStatusDict[]> {
-    return this.http.get<AnimalStatusDict[]>(`${environment.apiUrl}/dict/AnimalStatus`);
+  loadAnimalStatuses(): Observable<AnimalStatus[]> {
+    return this.http.get<AnimalStatus[]>(`${environment.apiUrl}/dict/AnimalStatus`);
   }
 
-  loadApartmentTypes(): Observable<ApartmentTypeDict[]> {
-    return this.http.get<ApartmentTypeDict[]>(`${environment.apiUrl}/dict/ApartmentType`);
+  loadApartmentTypes(): Observable<ApartmentType[]> {
+    return this.http.get<ApartmentType[]>(`${environment.apiUrl}/dict/ApartmentType`);
   }
 
-  loadBathroomStatuses(): Observable<BathroomStatusDict[]> {
-    return this.http.get<BathroomStatusDict[]>(`${environment.apiUrl}/dict/BathroomStatus`);
+  loadBathroomStatuses(): Observable<BathroomStatus[]> {
+    return this.http.get<BathroomStatus[]>(`${environment.apiUrl}/dict/BathroomStatus`);
   }
 
-  loadLocationStatuses(): Observable<LocationStatusDict[]> {
-    return this.http.get<LocationStatusDict[]>(`${environment.apiUrl}/dict/LocationStatus`);
+  loadLocationStatuses(): Observable<LocationStatus[]> {
+    return this.http.get<LocationStatus[]>(`${environment.apiUrl}/dict/LocationStatus`);
   }
 
-  loadProcessStatuses(): Observable<ProcessStatusDict[]> {
-    return this.http.get<ProcessStatusDict[]>(`${environment.apiUrl}/dict/ProcessStatus`);
+  loadProcessStatuses(): Observable<ProcessStatus[]> {
+    return this.http.get<ProcessStatus[]>(`${environment.apiUrl}/dict/ProcessStatus`);
   }
 
 }

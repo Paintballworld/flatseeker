@@ -8,11 +8,19 @@ import com.yakzhanov.flatseeker.conf.AppParams;
 import org.assertj.core.util.Strings;
 import org.jsoup.Jsoup;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.test.context.SpringBootTest;
 
+@SpringBootTest
 class OtodomAptPlatformTest {
 
     public static final String TEST_PAGE = "https://www.otodom.pl//pl/oferta/mieszkanie-4pok-86m2-z-widokiem-na-park-reduta-ID4eMgr";
-    private final AptPlatform platform = new OtodomAptPlatform();
+
+    @Autowired
+    @Qualifier(OtodomAptPlatform.OTODOM)
+    private AptPlatform platform;
+
     private final AppParams testParams = new AppParams() {
         @Override
         public int priceCap() {

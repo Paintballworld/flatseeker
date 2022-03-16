@@ -6,7 +6,7 @@
 </nz-affix>
 
 <nz-list nzItemLayout="vertical" [nzLoading]="loading">
-  <nz-list-item *ngFor="let item of records" class="list-item-record">
+  <nz-list-item *ngFor="let item of records" class="list-item-record" [class.list-item-record-inactive]="!item.processStatus?.active">
     <nz-list-item-meta (click)="editRecord(item)">
       <nz-list-item-meta-title (click)="editRecord(item)">
         {{ item.title }}
@@ -23,10 +23,10 @@
       <li
         *ngFor="let status of processStatuses"
         class="record-status-list-item"
-        [class.record-status-list-selected]="areEqual(item.processStatus, status.key)"
+        [class.record-status-list-selected]="item.processStatus.key === status.key"
         [class.truncated-status]="!areEqual(item.processStatus, status.key)"
         nz-tooltip nzTooltipTitle="{{ status.title }}">
-            <span class="record-status" (click)="updateProcessStatus(item, status.key)"
+            <span class="record-status" (click)="updateProcessStatus(item, status)"
                   [style]=" { backgroundColor: status.color }">
             {{ status.title }}
             </span>
@@ -34,13 +34,13 @@
     </ul>
     <ul nz-list-item-actions>
       <nz-list-item-action class="record-item-date">
-        {{ item.createdAt | date:'longDate' }}
+        {{ item.createdAt ? (item.createdAt | date:'longDate') : 'Даты нет' }}
       </nz-list-item-action>
       <nz-list-item-action>
-        {{ item.locationStatus   }}
+<!--        HERE-->
       </nz-list-item-action>
       <nz-list-item-action>
-        {{ getStatusDictValue(item.processStatus)}}
+<!--        AND HERE-->
       </nz-list-item-action>
 
       <nz-list-item-action>
@@ -88,10 +88,10 @@
             <nz-form-label class="form-item-label">Домашние животные</nz-form-label>
             <nz-form-control nzHasFeedback>
               <nz-select name="animalsStatus" [(ngModel)]="selectedRecord.animalsStatus" (ngModelChange)="log($event)">
-                <nz-option *ngFor="let enum of AnimalsStatus | keyvalue"
-                           [nzValue]="enum.key"
-                           [nzLabel]="enum.value"
-                >{{ enum.key }}</nz-option>
+                <nz-option *ngFor="let status of animalStatuses"
+                           [nzValue]="status.key"
+                           [nzLabel]="status.title"
+                >{{ status.key }}</nz-option>
               </nz-select>
             </nz-form-control>
           </nz-form-item>
@@ -100,8 +100,8 @@
             <nz-form-label class="form-item-label">Ванная комната</nz-form-label>
             <nz-form-control nzHasFeedback>
               <nz-select name="bathroomStatus" [(ngModel)]="selectedRecord.bathroomStatus">
-                <nz-option *ngFor="let enum of BathroomStatus | keyvalue" [nzValue]="enum.key"
-                           [nzLabel]="enum.value"></nz-option>
+                <nz-option *ngFor="let status of bathroomStatuses" [nzValue]="status.key"
+                           [nzLabel]="status.title"></nz-option>
               </nz-select>
             </nz-form-control>
           </nz-form-item>
@@ -109,9 +109,9 @@
           <nz-form-item class="form-item">
             <nz-form-label class="form-item-label">Тип жилья</nz-form-label>
             <nz-form-control nzHasFeedback>
-              <nz-select name="type" [(ngModel)]="selectedRecord.type">
-                <nz-option *ngFor="let enum of ApartmentType | keyvalue" [nzValue]="enum.key"
-                           [nzLabel]="enum.value"></nz-option>
+              <nz-select name="type" [(ngModel)]="selectedRecord.apartmentType">
+                <nz-option *ngFor="let type of apartmentTypes" [nzValue]="type.key"
+                           [nzLabel]="type.title"></nz-option>
               </nz-select>
             </nz-form-control>
           </nz-form-item>
@@ -120,8 +120,8 @@
             <nz-form-label class="form-item-label">Расстояние до школы</nz-form-label>
             <nz-form-control nzHasFeedback>
               <nz-select name="locationStatus" [(ngModel)]="selectedRecord.locationStatus">
-                <nz-option *ngFor="let enum of LocationStatus | keyvalue" [nzValue]="enum.key"
-                           [nzLabel]="enum.value"></nz-option>
+                <nz-option *ngFor="let status of locationStatuses" [nzValue]="status.key"
+                           [nzLabel]="status.title"></nz-option>
               </nz-select>
             </nz-form-control>
           </nz-form-item>

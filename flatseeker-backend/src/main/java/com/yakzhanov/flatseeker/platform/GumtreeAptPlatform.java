@@ -1,6 +1,7 @@
 package com.yakzhanov.flatseeker.platform;
 
 import static com.yakzhanov.flatseeker.platform.OtodomAptPlatform.NOT_EMPTY;
+import static com.yakzhanov.flatseeker.service.DictServiceImpl.*;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,11 +13,13 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import com.yakzhanov.flatseeker.conf.AppParams;
 import com.yakzhanov.flatseeker.conf.Constants;
-import com.yakzhanov.flatseeker.model.AnimalsStatus;
-import com.yakzhanov.flatseeker.model.ApartmentType;
-import com.yakzhanov.flatseeker.model.BathroomStatus;
+import com.yakzhanov.flatseeker.model.dict.AnimalStatus;
+import com.yakzhanov.flatseeker.model.dict.ApartmentType;
+import com.yakzhanov.flatseeker.model.dict.BathroomStatus;
 import com.yakzhanov.flatseeker.model.LinkData;
+import com.yakzhanov.flatseeker.service.DictService;
 import com.yakzhanov.flatseeker.utils.AppUtils;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.hibernate.cfg.NotYetImplementedException;
 import org.jsoup.nodes.Document;
@@ -25,11 +28,15 @@ import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
 
 @Component(GumtreeAptPlatform.GUMTREE)
+@RequiredArgsConstructor
 public class GumtreeAptPlatform implements AptPlatform {
 
-    private static final Long TIMEOUT = 1000L;
     public static final String GUMTREE = "Gumtree";
+
     private final AtomicLong nextCall = new AtomicLong(System.currentTimeMillis());
+    private static final Long TIMEOUT = 1000L;
+
+    private final DictService dictService;
 
     @Override
     public String baseUrl() {
@@ -42,7 +49,7 @@ public class GumtreeAptPlatform implements AptPlatform {
     }
 
     @Override
-    public AnimalsStatus extractAnimalStatus(Document document) {
+    public AnimalStatus extractAnimalStatus(Document document) {
         return searchFromAttributeList(document, "zwier")
           .map(this::resolveAnimalStatus)
           .orElse(null);
@@ -192,18 +199,18 @@ public class GumtreeAptPlatform implements AptPlatform {
           .orElse(null);
     }
 
-    private AnimalsStatus resolveAnimalStatus(String s) {
+    private AnimalStatus resolveAnimalStatus(String s) {
         if (s == null || s.isEmpty()) {
-            return AnimalsStatus.NOT_DEFINED;
+            return dictService.getForKey(AnimalStatus.class, NOT_DEFINED);
         }
-        return "TAK".equalsIgnoreCase(s) ? AnimalsStatus.ALLOWED : AnimalsStatus.NOT_ALLOWED;
+        return "TAK".equalsIgnoreCase(s) ? dictService.getForKey(AnimalStatus.class, ALLOWED) : dictService.getForKey(AnimalStatus.class, NOT_ALLOWED);
     }
 
     private ApartmentType resolveType(String s) {
         if (s == null || s.isEmpty()) {
             return null;
         }
-        return "Mieszkanie".equalsIgnoreCase(s) ? ApartmentType.FLAT : ApartmentType.HOUSE;
+        return "Mieszkanie".equalsIgnoreCase(s) ? dictService.getForKey(ApartmentType.class, FLAT) : dictService.getForKey(ApartmentType.class, HOUSE);
     }
 
     private Optional<String> searchFromAttributeList(Document document, String findBy) {

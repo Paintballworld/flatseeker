@@ -11,10 +11,11 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import com.yakzhanov.flatseeker.conf.AppParams;
 import com.yakzhanov.flatseeker.conf.Constants;
-import com.yakzhanov.flatseeker.model.AnimalsStatus;
-import com.yakzhanov.flatseeker.model.ApartmentType;
-import com.yakzhanov.flatseeker.model.BathroomStatus;
+import com.yakzhanov.flatseeker.model.dict.AnimalStatus;
+import com.yakzhanov.flatseeker.model.dict.ApartmentType;
+import com.yakzhanov.flatseeker.model.dict.BathroomStatus;
 import com.yakzhanov.flatseeker.model.LinkData;
+import com.yakzhanov.flatseeker.service.DictService;
 import com.yakzhanov.flatseeker.utils.AppUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -27,9 +28,13 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class OtodomAptPlatform implements AptPlatform {
 
-    public static final String OTODOM = "Otodom";
-    private static final Long TIMEOUT = 1000L;
     public static final Predicate<String> NOT_EMPTY = o -> !o.isEmpty() && !o.isBlank();
+    public static final String OTODOM = "Otodom";
+
+    private static final Long TIMEOUT = 1000L;
+
+    private final DictService dictService;
+
     private final AtomicLong nextCall = new AtomicLong(System.currentTimeMillis());
 
     @Override
@@ -43,8 +48,8 @@ public class OtodomAptPlatform implements AptPlatform {
     }
 
     @Override
-    public AnimalsStatus extractAnimalStatus(Document document) {
-        return AnimalsStatus.NOT_DEFINED;
+    public AnimalStatus extractAnimalStatus(Document document) {
+        return dictService.defaultValue(AnimalStatus.class);
     }
 
     @Override

@@ -5,7 +5,13 @@ import java.util.UUID;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import com.yakzhanov.flatseeker.model.dict.AnimalStatus;
+import com.yakzhanov.flatseeker.model.dict.ApartmentType;
+import com.yakzhanov.flatseeker.model.dict.BathroomStatus;
+import com.yakzhanov.flatseeker.model.dict.LocationStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,9 +31,11 @@ public class DuplicateRecord {
 
     @ToString.Include
     private String title;
+
     private String description;
 
     private Integer rentPrice;
+
     private Integer feePrice;
 
     private Integer deposit;
@@ -36,26 +44,31 @@ public class DuplicateRecord {
 
     private Boolean conditioner;
 
-    @Enumerated(EnumType.STRING)
-    private AnimalsStatus animalsStatus;
-    @Enumerated(EnumType.STRING)
+    @OneToOne(fetch = FetchType.EAGER)
+    private AnimalStatus animalStatus;
+
+    @OneToOne(fetch = FetchType.EAGER)
     private BathroomStatus bathroomStatus;
 
     private String location;
 
-    private ApartmentType type;
+    @OneToOne(fetch = FetchType.EAGER)
+    private ApartmentType apartmentType;
 
     private Date createdAt;
 
     private String mainImageUrl;
 
     // Service
-    @Enumerated(EnumType.STRING)
+    @OneToOne(fetch = FetchType.EAGER)
     private LocationStatus locationStatus;
+
     private String link;
+
     private String platformName;
 
     private Date insertedAt;
+
     private String originalRecordId;
 
     public static DuplicateRecord duplicate(ApartmentRecord apartmentRecord) {
@@ -68,10 +81,10 @@ public class DuplicateRecord {
           .deposit(apartmentRecord.getDeposit())
           .area(apartmentRecord.getArea())
           .conditioner(apartmentRecord.getConditioner())
-          .animalsStatus(apartmentRecord.getAnimalsStatus())
+          .animalStatus(apartmentRecord.getAnimalStatus())
           .bathroomStatus(apartmentRecord.getBathroomStatus())
           .location(apartmentRecord.getLocation())
-          .type(apartmentRecord.getType())
+          .apartmentType(apartmentRecord.getApartmentType())
           .createdAt(apartmentRecord.getCreatedAt())
           .mainImageUrl(apartmentRecord.getMainImageUrl())
           .locationStatus(apartmentRecord.getLocationStatus())

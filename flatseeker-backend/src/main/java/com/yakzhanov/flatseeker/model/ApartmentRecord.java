@@ -2,9 +2,14 @@ package com.yakzhanov.flatseeker.model;
 
 import java.util.Date;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import com.yakzhanov.flatseeker.model.dict.AnimalStatus;
+import com.yakzhanov.flatseeker.model.dict.ApartmentType;
+import com.yakzhanov.flatseeker.model.dict.BathroomStatus;
+import com.yakzhanov.flatseeker.model.dict.LocationStatus;
+import com.yakzhanov.flatseeker.model.dict.ProcessStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,28 +40,36 @@ public class ApartmentRecord {
 
     private Boolean conditioner;
 
-    @Enumerated(EnumType.STRING)
-    private AnimalsStatus animalsStatus;
-    @Enumerated(EnumType.STRING)
+    @OneToOne(fetch = FetchType.EAGER)
+    private AnimalStatus animalStatus;
+
+    @OneToOne(fetch = FetchType.EAGER)
     private BathroomStatus bathroomStatus;
 
     private String location;
 
-    private ApartmentType type;
+    @OneToOne(fetch = FetchType.EAGER)
+    private ApartmentType apartmentType;
 
     private Date createdAt;
 
     private String mainImageUrl;
 
     // Service
-    @Enumerated(EnumType.STRING)
+    @OneToOne(fetch = FetchType.EAGER)
     private LocationStatus locationStatus;
+
     private String link;
+
     private String platformName;
-    @Enumerated(EnumType.STRING)
+
+    @OneToOne(fetch = FetchType.EAGER)
     private ProcessStatus processStatus;
+
     private Date insertedAt;
+
     private boolean viewed;
+
     private boolean removed;
 
 }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Injectable, OnInit } from '@angular/core';
+import { EventEmitter, Injectable, OnInit } from '@angular/core';
 import { ApartmentRecord } from "../model/ApartmentRecord";
 
 @Injectable({providedIn: 'root'})

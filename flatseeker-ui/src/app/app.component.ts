@@ -1,4 +1,4 @@
-import { Component, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthenticationService } from "./service/authentication.service";
 import { Router } from "@angular/router";
 import { NzMessageService } from "ng-zorro-antd/message";

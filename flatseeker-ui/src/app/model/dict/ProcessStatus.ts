@@ -1,4 +1,4 @@
-export class ProcessStatusDict {
+export class ProcessStatus {
   public key: string;
   public title: string;
   public color: string;
@@ -9,5 +9,9 @@ export class ProcessStatusDict {
     this.title = title;
     this.color = color;
     this.active = active;
+  }
+
+  public static mock() {
+    return new ProcessStatus("", "", "", false);
   }
 }

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+
+ <changeSet id="014-01" author="yakzhanov">
+   <dropForeignKeyConstraint baseTableName="apartment_record" constraintName="apartment_record_animal_status_fk"/>
+   <dropForeignKeyConstraint baseTableName="apartment_record" constraintName="apartment_record_apartment_type_fk"/>
+   <dropForeignKeyConstraint baseTableName="apartment_record" constraintName="apartment_record_bathroom_status_fk"/>
+   <dropForeignKeyConstraint baseTableName="apartment_record" constraintName="apartment_record_location_status_fk"/>
+   <dropForeignKeyConstraint baseTableName="apartment_record" constraintName="apartment_record_process_status_fk"/>
+
+   <renameColumn tableName="apartment_record" oldColumnName="animal_status" newColumnName="animal_status_id"/>
+   <renameColumn tableName="apartment_record" oldColumnName="apartment_type" newColumnName="apartment_type_id"/>
+   <renameColumn tableName="apartment_record" oldColumnName="bathroom_status" newColumnName="bathroom_status_id"/>
+   <renameColumn tableName="apartment_record" oldColumnName="location_status" newColumnName="location_status_id"/>
+   <renameColumn tableName="apartment_record" oldColumnName="process_status" newColumnName="process_status_id"/>
+
+   <addForeignKeyConstraint baseTableName="apartment_record"
+                            baseColumnNames="animal_status_id"
+                            constraintName="apartment_record_animal_status_fk"
+                            referencedTableName="animal_status"
+                            referencedColumnNames="id"/>
+   <addForeignKeyConstraint baseTableName="apartment_record"
+                            baseColumnNames="apartment_type_id"
+                            constraintName="apartment_record_apartment_type_fk"
+                            referencedTableName="apartment_type"
+                            referencedColumnNames="id"/>
+   <addForeignKeyConstraint baseTableName="apartment_record"
+                            baseColumnNames="bathroom_status_id"
+                            constraintName="apartment_record_bathroom_status_fk"
+                            referencedTableName="bathroom_status"
+                            referencedColumnNames="id"/>
+   <addForeignKeyConstraint baseTableName="apartment_record"
+                            baseColumnNames="location_status_id"
+                            constraintName="apartment_record_location_status_fk"
+                            referencedTableName="location_status"
+                            referencedColumnNames="id"/>
+   <addForeignKeyConstraint baseTableName="apartment_record"
+                            baseColumnNames="process_status_id"
+                            constraintName="apartment_record_process_status_fk"
+                            referencedTableName="process_status"
+                            referencedColumnNames="id"/>
+ </changeSet>
+
+  <changeSet id="014-02" author="yakzhanov">
+    <addColumn tableName="duplicate_record">
+      <column name="animal_status_id" type="bigint"/>
+      <column name="apartment_type_id" type="bigint"/>
+      <column name="bathroom_status_id" type="bigint"/>
+      <column name="location_status_id" type="bigint"/>
+    </addColumn>
+
+    <addForeignKeyConstraint baseTableName="duplicate_record"
+                             baseColumnNames="animal_status_id"
+                             constraintName="apartment_record_animal_status_fk"
+                             referencedTableName="animal_status"
+                             referencedColumnNames="id"/>
+    <addForeignKeyConstraint baseTableName="duplicate_record"
+                             baseColumnNames="apartment_type_id"
+                             constraintName="apartment_record_apartment_type_fk"
+                             referencedTableName="apartment_type"
+                             referencedColumnNames="id"/>
+    <addForeignKeyConstraint baseTableName="duplicate_record"
+                             baseColumnNames="bathroom_status_id"
+                             constraintName="apartment_record_bathroom_status_fk"
+                             referencedTableName="bathroom_status"
+                             referencedColumnNames="id"/>
+    <addForeignKeyConstraint baseTableName="duplicate_record"
+                             baseColumnNames="location_status_id"
+                             constraintName="apartment_record_location_status_fk"
+                             referencedTableName="location_status"
+                             referencedColumnNames="id"/>
+  </changeSet>
+
+
+
+</databaseChangeLog>

@@ -6,6 +6,10 @@ app:
   jwtSecret: flatseeker-app
   jwtExpirationMs: 86400000
 
+lombok:
+  toString:
+    callSuper:
+
 spring:
   security:
     user:

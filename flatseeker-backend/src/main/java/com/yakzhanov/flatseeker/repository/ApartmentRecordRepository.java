@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import com.yakzhanov.flatseeker.model.ApartmentRecord;
-import com.yakzhanov.flatseeker.model.ProcessStatus;
+import com.yakzhanov.flatseeker.model.dict.ProcessStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

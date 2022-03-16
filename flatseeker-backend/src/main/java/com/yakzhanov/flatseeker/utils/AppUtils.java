@@ -5,7 +5,7 @@ import java.net.URL;
 import java.util.UUID;
 import com.sun.istack.Nullable;
 import com.yakzhanov.flatseeker.model.ApartmentRecord;
-import com.yakzhanov.flatseeker.model.ProcessStatus;
+import com.yakzhanov.flatseeker.model.dict.ProcessStatus;
 import com.yakzhanov.flatseeker.platform.AptPlatform;
 import org.jsoup.nodes.Document;
 
@@ -20,7 +20,7 @@ public class AppUtils {
         }
     }
 
-    public static ApartmentRecord parseRecord(Document document, AptPlatform aptPlatform, URL pageUrl) {
+    public static ApartmentRecord parseRecord(Document document, AptPlatform aptPlatform, URL pageUrl, ProcessStatus processStatus) {
         return ApartmentRecord.builder()
           .id(UUID.randomUUID().toString())
           .title(aptPlatform.extractTitle(document))
@@ -31,14 +31,14 @@ public class AppUtils {
           .deposit(aptPlatform.extractDeposit(document))
           .area(aptPlatform.extractArea(document))
           .conditioner(aptPlatform.extractConditioner(document))
-          .animalsStatus(aptPlatform.extractAnimalStatus(document))
+          .animalStatus(aptPlatform.extractAnimalStatus(document))
           .bathroomStatus(aptPlatform.extractBathroomStatus(document))
           .location(aptPlatform.extractLocation(document))
-          .type(aptPlatform.extractApartmentType(document))
+          .apartmentType(aptPlatform.extractApartmentType(document))
           .platformName(aptPlatform.name())
           .createdAt(aptPlatform.extractCreatedAt(document))
           .mainImageUrl(aptPlatform.extractMainImageUrl(document))
-          .processStatus(ProcessStatus.NEW)
+          .processStatus(processStatus)
           .build();
     }
 }

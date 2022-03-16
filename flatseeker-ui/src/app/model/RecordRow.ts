@@ -1,5 +1,5 @@
-import { ProcessStatus } from "./ProcessStatus";
-import { LocationStatus } from "./LocationStatus";
+import { ProcessStatus } from "./dict/ProcessStatus";
+import { LocationStatus } from "./dict/LocationStatus";
 import { ApartmentRecord } from "./ApartmentRecord";
 
 export class RecordRow {

@@ -1,8 +1,8 @@
-import { ProcessStatus } from "./ProcessStatus";
-import { LocationStatus } from "./LocationStatus";
-import { BathroomStatus } from "./BathroomStatus";
-import { AnimalsStatus } from "./AnimalsStatus";
-import { ApartmentType } from "./ApartmentType";
+import { AnimalStatus } from "./dict/AnimalStatus";
+import { BathroomStatus } from "./dict/BathroomStatus";
+import { ApartmentType } from "./dict/ApartmentType";
+import { LocationStatus } from "./dict/LocationStatus";
+import { ProcessStatus } from "./dict/ProcessStatus";
 
 export class ApartmentRecord {
   public id: string;
@@ -13,10 +13,10 @@ export class ApartmentRecord {
   public deposit: number;
   public area: number;
   public conditioner: Boolean;
-  public animalsStatus: AnimalsStatus;
+  public animalsStatus: AnimalStatus;
   public bathroomStatus: BathroomStatus;
   public location: string;
-  public type: ApartmentType;
+  public apartmentType: ApartmentType;
   public createdAt: Date;
   public mainImageUrl: string;
   public locationStatus: LocationStatus;
@@ -25,7 +25,7 @@ export class ApartmentRecord {
   public processStatus: ProcessStatus;
   public viewed: boolean;
 
-  constructor(id: string, title: string, description: string, rentPrice: number, feePrice: number, deposit: number, area: number, conditioner: Boolean, animalsStatus: AnimalsStatus, bathroomStatus: BathroomStatus, location: string, type: ApartmentType, createdAt: Date, mainImageUrl: string, locationStatus: LocationStatus, link: string, platformName: string, processStatus: ProcessStatus, viewed: boolean) {
+  constructor(id: string, title: string, description: string, rentPrice: number, feePrice: number, deposit: number, area: number, conditioner: Boolean, animalStatus: AnimalStatus, bathroomStatus: BathroomStatus, location: string, apartmentType: ApartmentType, createdAt: Date, mainImageUrl: string, locationStatus: LocationStatus, link: string, platformName: string, processStatus: ProcessStatus, viewed: boolean) {
     this.id = id;
     this.title = title;
     this.description = description;
@@ -34,10 +34,10 @@ export class ApartmentRecord {
     this.deposit = deposit;
     this.area = area;
     this.conditioner = conditioner;
-    this.animalsStatus = animalsStatus;
+    this.animalsStatus = animalStatus;
     this.bathroomStatus = bathroomStatus;
     this.location = location;
-    this.type = type;
+    this.apartmentType = apartmentType;
     this.createdAt = createdAt;
     this.mainImageUrl = mainImageUrl;
     this.locationStatus = locationStatus;
@@ -48,6 +48,6 @@ export class ApartmentRecord {
   }
 
   public static mock() {
-    return new ApartmentRecord("", "", "", 0, 0, 0, 0, false, AnimalsStatus.NOT_DEFINED, BathroomStatus.SINGLE, "", ApartmentType.FLAT, new Date(), "", LocationStatus.CLOSE, "", "", ProcessStatus.UNKNOWN, false);
+    return new ApartmentRecord("", "", "", 0, 0, 0, 0, false,   AnimalStatus.mock(), BathroomStatus.mock(), "", ApartmentType.mock(), new Date(), "", LocationStatus.mock(), "", "", ProcessStatus.mock(), false);
   }
 }
