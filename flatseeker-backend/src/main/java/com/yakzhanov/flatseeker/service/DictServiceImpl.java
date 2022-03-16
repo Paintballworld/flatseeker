@@ -1,5 +1,6 @@
 package com.yakzhanov.flatseeker.service;
 
+import static javax.management.timer.Timer.ONE_HOUR;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +22,7 @@ import com.yakzhanov.flatseeker.repository.LocationStatusRepository;
 import com.yakzhanov.flatseeker.repository.ProcessStatusRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -45,7 +47,12 @@ public class DictServiceImpl implements DictService {
     private final Map<Class<? extends DictParent>, Map<String, ? extends DictParent>> cachedValues = new HashMap<>();
 
     @PostConstruct
-    private void initDefaultValues() {
+    private void postConstruct() {
+        updateCacheValues();
+    }
+
+    @Scheduled(fixedDelay = ONE_HOUR)
+    private void updateCacheValues() {
         putToCache(animalStatusRepository.findAll());
         putToCache(apartmentTypeRepository.findAll());
         putToCache(bathroomStatusRepository.findAll());
